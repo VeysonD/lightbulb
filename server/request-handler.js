@@ -1,6 +1,8 @@
 import express from 'express';
 import morgan from 'morgan';
 
+import router from './api/api.js';
+
 const app = express();
 
 app.use(express.static('public'));
@@ -11,10 +13,7 @@ app.get('/', (req, res, next) => {
   res.end('GET');
 });
 
-app.get('/api', (req, res, next) => {
-  console.log('Testing API');
-  res.end('API');
-});
+app.use('/api', router);
 
 
 export default app;
