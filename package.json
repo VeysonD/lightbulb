@@ -2,11 +2,12 @@
   "name": "lightbulb",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "dev": "webpack",
-    "dev:2": "nodemon --inspect index.js --exec babel-node",
-    "start": "babel-node index.js",
+    "dev": "nodemon --inspect index.js --exec babel-node",
+    "dev:2": "webpack",
+    "postInstall": "webpack -p",
+    "start": "NODE_ENV=production babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,10 @@
   },
   "homepage": "https://github.com/VeysonD/lightbulb#readme",
   "dependencies": {
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "morgan": "^1.9.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
   },
