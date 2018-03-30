@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 
-import router from './api/api.js';
+import router from './api/api-handler.js';
 
 const app = express();
 
