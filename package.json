@@ -1,0 +1,19 @@
+{
+  "name": "lightbulb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VeysonD/lightbulb.git"
+  },
+  "author": "Rick Gallegos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VeysonD/lightbulb/issues"
+  },
+  "homepage": "https://github.com/VeysonD/lightbulb#readme"
+}
