@@ -4,7 +4,7 @@ const HEROKU_URL = require('./config');
 
 const paths = {
   PUBLIC: path.resolve(__dirname, 'public'),
-  SRC: path.resolve(__dirname, 'src');
+  SRC: path.resolve(__dirname, 'src')
 }
 
 const config = {
