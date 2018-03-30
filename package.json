@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack -w",
-    "start": "babel index.js",
+    "dev:2": "nodemon --exec npm start",
+    "start": "babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
