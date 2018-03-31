@@ -13,7 +13,7 @@ const addLight = () => db.light.create({
   longitude: 37.76435775,
   location: '(37.764357751686, -122.41747701285)',
   name: 'Reading light',
-  on: true,
+  switched_on: true,
   connected_wifi: true,
   wifi_id: 1,
   changelogs: [
@@ -33,7 +33,7 @@ const addLight = () => db.light.create({
 
 const addClock = () => db.clock.create({
   name: 'Living room clock',
-  on: true,
+  switched_on: true,
   daylights_saving: false,
   hour_offset: 0,
   minute_offset: 0,
@@ -64,7 +64,7 @@ const addWifi = () => db.wifi.create({
   ssid: 'McWifi',
   password: 'abc123',
   protocol: '802.11n',
-  on: true,
+  switched_on: true,
   security_type: 'WPA2-Personal',
   network_band: '2.4 GHz',
   network_channel: '1',
