@@ -13,7 +13,7 @@ const ClockSchema = (sequelize, DataTypes) => {
     longitude: DataTypes.DECIMAL,
     location: DataTypes.STRING,
   });
-  Clock.assosciate = (models) => {
+  Clock.associate = (models) => {
     Clock.belongsTo(models.wifi);
     Clock.hasMany(models.changelog);
   };
