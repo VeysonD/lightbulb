@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import db from './config';
+import db from './db-config';
 
 const addLight = () => db.light.create({
   charging: false,

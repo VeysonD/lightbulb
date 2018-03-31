@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const readModel = (db, directory, sequelize) => {
+const readModels = (db, directory, sequelize) => {
   const files = [];
   const getAllModels = (dir) => {
     fs.readdirSync(dir)
@@ -32,4 +32,4 @@ const readModel = (db, directory, sequelize) => {
 };
 
 
-export default readModel;
+export default readModels;
