@@ -2,7 +2,7 @@ const ClockSchema = (sequelize, DataTypes) => {
   const Clock = sequelize.define('clock', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     name: DataTypes.STRING,
-    on: DataTypes.BOOLEAN,
+    switched_on: DataTypes.BOOLEAN,
     daylights_saving: DataTypes.BOOLEAN,
     hour_offset: DataTypes.INTEGER,
     minute_offset: DataTypes.INTEGER,
