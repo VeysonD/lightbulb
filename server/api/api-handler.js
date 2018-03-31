@@ -1,9 +1,9 @@
 import express from 'express';
 
-import lamp from './lamp/lamp';
+import light from './light/light';
 
 const router = express.Router();
 
-router.use('/lamp', lamp);
+router.use('/light', light);
 
 export default router;
