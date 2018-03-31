@@ -3,6 +3,7 @@ const WifiSchema = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     ssid: DataTypes.STRING,
     password: DataTypes.STRING,
+    on: DataTypes.BOOLEAN,
     protocol: DataTypes.STRING,
     security_type: DataTypes.STRING,
     network_band: DataTypes.STRING,

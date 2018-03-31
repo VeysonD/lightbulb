@@ -12,6 +12,7 @@ const ClockSchema = (sequelize, DataTypes) => {
     latitude: DataTypes.DECIMAL,
     longitude: DataTypes.DECIMAL,
     location: DataTypes.STRING,
+    connected_wifi: DataTypes.BOOLEAN,
     wifi_id: DataTypes.INTEGER,
   });
   Clock.associate = (models) => {

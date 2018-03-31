@@ -10,6 +10,7 @@ const LightSchema = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     name: DataTypes.STRING,
     on: DataTypes.BOOLEAN,
+    connected_wifi: DataTypes.BOOLEAN,
     wifi_id: DataTypes.INTEGER,
   });
 
