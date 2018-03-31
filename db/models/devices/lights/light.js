@@ -5,7 +5,10 @@ const LightSchema = (sequelize, DataTypes) => {
     color: DataTypes.STRING,
     dim: DataTypes.BOOLEAN,
     ip: DataTypes.STRING,
-    location: DataTypes.GEOMETRY,
+    latitude: DataTypes.DECIMAL,
+    longitude: DataTypes.DECIMAL,
+    location: DataTypes.STRING,
+    name: DataTypes.STRING,
     on: DataTypes.BOOLEAN,
   });
 
