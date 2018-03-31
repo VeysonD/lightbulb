@@ -14,6 +14,7 @@ const addLight = () => db.light.create({
   location: '(37.764357751686, -122.41747701285)',
   name: 'Reading light',
   on: true,
+  wifi_id: 1,
   changelogs: [
     {
       log: 'Reading light was turned on at 2:23PM',
@@ -35,12 +36,13 @@ const addClock = () => db.clock.create({
   daylights_saving: false,
   hour_offset: 0,
   minute_offset: 0,
-  timezome: 'PST',
+  timezone: 'PST',
   twentyfour_hour: true,
   ip: '127.0.0.1',
   latitude: -120.417477,
   longitude: 30.76435775,
   location: '(30.764357751686, -120.41747701285)',
+  wifi_id: 1,
   changelogs: [
     {
       log: 'Living room clock was turned on at 1:23PM',
@@ -81,11 +83,7 @@ const addWifi = () => db.wifi.create({
     },
   ],
 }, {
-  include: [
-    db.changelog,
-    // db.clock,
-    // db.light,
-  ],
+  include: [db.changelog],
 });
 
 const dbClose = () => db.sequelize.close();
