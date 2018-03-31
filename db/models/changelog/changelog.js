@@ -4,7 +4,7 @@ const ChangelogSchema = (sequelize, DataTypes) => {
     log: DataTypes.STRING,
   });
 
-  Changelog.associate = (models) => {
+  Changelog.associate = function ChangelogAssociate(models) {
     Changelog.belongsTo(models.light);
     Changelog.belongsTo(models.clock);
     Changelog.belongsTo(models.wifi);

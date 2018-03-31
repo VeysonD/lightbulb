@@ -1,13 +1,27 @@
 import fs from 'fs';
 import path from 'path';
 
-const readModel = (db, __dirname, sequelize) => {
-  fs.readdirSync(__dirname)
-    .filter(file => (file.indexOf('.') !== 0) && (file !== 'index.js'))
-    .forEach((file) => {
-      const model = sequelize.import(path.join(__dirname, file));
-      db[model.name] = model;
-    });
+const readModel = (db, directory, sequelize) => {
+  const files = [];
+  const getAllModels = (dir) => {
+    fs.readdirSync(dir)
+      .forEach((file) => {
+        const name = path.join(dir, file);
+        const isDirectory = fs.statSync(name).isDirectory();
+        if (isDirectory) {
+          getAllModels(name);
+        } else {
+          files.push(name);
+        }
+      });
+  };
+  getAllModels(directory);
+
+
+  files.forEach((file) => {
+    const model = sequelize.import(file);
+    db[model.name] = model;
+  });
 
   Object.keys(db).forEach((modelName) => {
     if (db[modelName].associate) {
@@ -16,5 +30,6 @@ const readModel = (db, __dirname, sequelize) => {
   });
   return db;
 };
+
 
 export default readModel;
