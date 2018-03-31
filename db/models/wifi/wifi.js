@@ -17,6 +17,7 @@ const WifiSchema = (sequelize, DataTypes) => {
   Wifi.associate = (models) => {
     Wifi.hasMany(models.light);
     Wifi.hasMany(models.clock);
+    Wifi.hasMany(models.changelog);
   };
   return Wifi;
 };

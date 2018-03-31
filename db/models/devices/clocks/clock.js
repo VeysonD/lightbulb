@@ -1,12 +1,13 @@
 const ClockSchema = (sequelize, DataTypes) => {
   const Clock = sequelize.define('clock', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    daylights_saving: DataTypes.BOOLEAN,
+    hour_offset: DataTypes.INTEGER,
+    location: DataTypes.GEOMETRY,
+    minute_offset: DataTypes.INTEGER,
     on: DataTypes.BOOLEAN,
     timezone: DataTypes.STRING,
-    daylights_saving: DataTypes.BOOLEAN,
     twentyfour_hour: DataTypes.BOOLEAN,
-    hour_offset: DataTypes.INTEGER,
-    minute_offset: DataTypes.INTEGER,
   });
   Clock.assosciate = (models) => {
     Clock.belongsTo(models.wifi);
