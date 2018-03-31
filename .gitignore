@@ -4,3 +4,6 @@ node_modules
 #app bundle
 public/bundle.js
 public/*png
+
+#environment
+.env

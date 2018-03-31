@@ -1,8 +1,11 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 import app from './server/request-handler';
 
-const PORT = process.env.PORT || 5000;
-const SERVER = process.env.SERVER || 'https://127.0.0.1';
+const { SERVER, PORT } = process.env;
 
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server is listening at ${SERVER}:${PORT}`);
 });
