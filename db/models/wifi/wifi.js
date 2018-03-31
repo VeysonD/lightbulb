@@ -2,6 +2,7 @@ const WifiSchema = (sequelize, DataTypes) => {
   const Wifi = sequelize.define('wifi', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     ssid: DataTypes.STRING,
+    password: DataTypes.STRING,
     protocol: DataTypes.STRING,
     security_type: DataTypes.STRING,
     network_band: DataTypes.STRING,

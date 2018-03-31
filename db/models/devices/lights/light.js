@@ -11,6 +11,7 @@ const LightSchema = (sequelize, DataTypes) => {
 
   Light.associate = (models) => {
     Light.belongsTo(models.wifi);
+    Light.hasMany(models.changelog);
   };
   return Light;
 };

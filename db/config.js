@@ -13,7 +13,7 @@ const sequelize = new Sequelize('mydevices', process.env.DB_USERNAME || 'postgre
 
 const db = {};
 
-readModels(db, `${__dirname}/models/lights`, sequelize);
+readModels(db, `${__dirname}/models`, sequelize);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
