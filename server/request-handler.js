@@ -1,14 +1,14 @@
 import express from 'express';
 import morgan from 'morgan';
 
-import router from './api/api-handler.js';
+import router from './api/api-handler';
 
 const app = express();
 
 app.use(express.static('public'));
 app.use(morgan('dev'));
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
   console.log('Testing get');
   res.end('GET');
 });

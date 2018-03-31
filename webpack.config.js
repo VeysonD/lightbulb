@@ -4,22 +4,22 @@ const HEROKU_URL = require('./config');
 
 const paths = {
   PUBLIC: path.resolve(__dirname, 'public'),
-  SRC: path.resolve(__dirname, 'src')
-}
+  SRC: path.resolve(__dirname, 'src'),
+};
 
 const config = {
   entry: path.join(paths.SRC, 'index.jsx'),
   devtool: 'cheap-eval-source-map',
   output: {
     path: paths.PUBLIC,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env': { HEROKU_URL }
-    })
+      'process.env': { HEROKU_URL },
+    }),
   ],
   module: {
     rules: [
@@ -27,34 +27,34 @@ const config = {
         enforce: 'pre',
         test: /\.(js|jsx)$/,
         loader: 'eslint-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        loader: 'babel-loader'
+        loader: 'babel-loader',
       },
       {
         test: /\.(png|jpg|gif)$/,
-        loader: 'file-loader'
-      }
-    ]
+        loader: 'file-loader',
+      },
+    ],
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx'],
   },
   stats: {
     colors: true,
-    reasons: true
-  }
-}
+    reasons: true,
+  },
+};
 
 if (process.env.NODE_ENV === 'production') {
   config.devtool = false;
   config.plugins = [
     new webpack.DefinePlugin({
-      'process.env': { HEROKU_URL }
-    })
+      'process.env': { HEROKU_URL },
+    }),
   ];
 }
 
