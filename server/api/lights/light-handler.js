@@ -20,17 +20,40 @@ lightRouter.get('/:id', (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send('There was an error with the database');
+      res.send('There was an error with your request');
     });
 });
 
 
-lightRouter.post('/:id/on', (req, res) => {
+lightRouter.post('/:id/switch', (req, res) => {
   const { id } = req.params;
   db.sequelize
-    .query(`UPDATE lights SET on = NOT on WHERE id = ${id}`)
-    .spread((light, metadata) => {
-      res.send(`Light id ${light} and ${metadata}`);
+    .query(`UPDATE lights SET switched_on = NOT switched_on WHERE id = ${id} RETURNING name, switched_on`)
+    .spread((light) => {
+      const { name } = light[0];
+      const on = light[0].switched_on;
+      let onText = '';
+      if (on) {
+        onText = 'on';
+      } else {
+        onText = 'off';
+      }
+      db.changelog
+        .create({
+          log: `${name} was switched ${onText}`,
+          lightId: id,
+        })
+        .then((changelog) => {
+          res.send(changelog);
+        })
+        .catch((error) => {
+          console.error(error);
+          res.send('There was an error when inserting a new log');
+        });
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send('There was an error with your request');
     });
 });
 
