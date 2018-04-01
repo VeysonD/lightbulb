@@ -16,6 +16,7 @@ const addLight = () => db.light.create({
   switched_on: true,
   connected_wifi: true,
   wifi_id: 1,
+  wifi_pass: 'abc123',
   changelogs: [
     {
       log: 'Reading light was turned on',
@@ -45,6 +46,7 @@ const addClock = () => db.clock.create({
   location: '(30.764357751686, -120.41747701285)',
   connected_wifi: true,
   wifi_id: 1,
+  wifi_pass: 'abc123',
   changelogs: [
     {
       log: 'Living room clock was turned on',

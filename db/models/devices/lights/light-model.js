@@ -12,6 +12,7 @@ const LightSchema = (sequelize, DataTypes) => {
     switched_on: DataTypes.BOOLEAN,
     connected_wifi: DataTypes.BOOLEAN,
     wifi_id: DataTypes.INTEGER,
+    wifi_pass: DataTypes.STRING,
   });
 
   Light.associate = (models) => {

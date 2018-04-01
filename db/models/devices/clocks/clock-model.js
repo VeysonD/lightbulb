@@ -14,6 +14,7 @@ const ClockSchema = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     connected_wifi: DataTypes.BOOLEAN,
     wifi_id: DataTypes.INTEGER,
+    wifi_pass: DataTypes.STRING,
   });
   Clock.associate = (models) => {
     Clock.belongsTo(models.wifi);
