@@ -5,9 +5,9 @@ const ChangelogSchema = (sequelize, DataTypes) => {
   });
 
   Changelog.associate = (models) => {
-    Changelog.belongsTo(models.light);
-    Changelog.belongsTo(models.clock);
-    Changelog.belongsTo(models.wifi);
+    Changelog.belongsTo(models.light, { onDelete: 'CASCADE' });
+    Changelog.belongsTo(models.clock, { onDelete: 'CASCADE' });
+    Changelog.belongsTo(models.wifi, { onDelete: 'CASCADE' });
   };
   return Changelog;
 };
