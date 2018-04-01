@@ -18,10 +18,10 @@ const addLight = () => db.light.create({
   wifi_id: 1,
   changelogs: [
     {
-      log: 'Reading light was turned on at 2:23PM',
+      log: 'Reading light was turned on',
     },
     {
-      log: 'Reading light was moved to (37.764357751686, -122.41747701285) at 1:00PM',
+      log: 'Reading light was moved to (37.764357751686, -122.41747701285)',
     },
     {
       log: 'Reading light switched Wi-Fi to McWifi',
@@ -47,13 +47,13 @@ const addClock = () => db.clock.create({
   wifi_id: 1,
   changelogs: [
     {
-      log: 'Living room clock was turned on at 1:23PM',
+      log: 'Living room clock was turned on',
     },
     {
-      log: 'Living room clock was moved to (30.764357751686, -120.41747701285) at 10:00PM',
+      log: 'Living room clock was moved to (30.764357751686, -120.41747701285)',
     },
     {
-      log: 'Living room clock switched Wi-Fi to McWifi at 5:00AM',
+      log: 'Living room clock switched Wi-Fi to McWifi',
     },
   ],
 }, {
@@ -79,10 +79,10 @@ const addWifi = () => db.wifi.create({
   physical_address: 'AA-AA-AA-AA-AA-AA',
   changelogs: [
     {
-      log: 'McWifi was turned on at 1:01AM',
+      log: 'McWifi was turned on',
     },
     {
-      log: 'McWifi was moved to (30.77000000, -120.42000000) at 1:10AM',
+      log: 'McWifi was moved to (30.77000000, -120.42000000)',
     },
   ],
 }, {
