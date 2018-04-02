@@ -1,4 +1,5 @@
 import db from './../../../../db/db-config';
+import addLog from './../../utils/logger';
 
 const changeColor = (req, res) => {
   const { id } = req.locals;
@@ -17,18 +18,9 @@ const changeColor = (req, res) => {
         res.send('That light does not exist');
       } else {
         const { name } = light[1][0].dataValues;
-        db.changelog
-          .create({
-            log: `${name}'s color changed to ${color}`,
-            lightId: id,
-          })
-          .then((changelog) => {
-            res.send(changelog);
-          })
-          .catch((error) => {
-            console.error(error);
-            res.send('There was an error when inserting a new log');
-          });
+        const log = `${name}'s color changed to ${color}`;
+        const logError = 'There was an error when inserting a new log';
+        addLog(log, logError, 'lightId', id, req, res);
       }
     })
     .catch((error) => {
@@ -50,18 +42,9 @@ const changeSwitch = (req, res) => {
       } else {
         onText = 'off';
       }
-      db.changelog
-        .create({
-          log: `${name} was switched ${onText}`,
-          lightId: id,
-        })
-        .then((changelog) => {
-          res.send(changelog);
-        })
-        .catch((error) => {
-          console.error(error);
-          res.send('There was an error when inserting a new log');
-        });
+      const log = `${name} was switched ${onText}`;
+      const logError = 'There was an error when inserting a new log';
+      addLog(log, logError, 'lightId', id, req, res);
     })
     .catch((error) => {
       console.error(error);

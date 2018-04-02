@@ -1,4 +1,5 @@
 import db from './../../../../db/db-config';
+import addLog from './../../utils/logger';
 
 const wifiOff = (req, res) => {
   const { id } = req.locals;
@@ -13,18 +14,9 @@ const wifiOff = (req, res) => {
       } else {
         textLog = 'disconnected from';
       }
-      db.changelog
-        .create({
-          log: `${name} was ${textLog} ${ssid} wifi`,
-          lightId: id,
-        })
-        .then((changelog) => {
-          res.send(changelog);
-        })
-        .catch((error) => {
-          console.error(error);
-          res.send('There was an error when inserting a new log');
-        });
+      const log = `${name} was ${textLog} ${ssid} wifi`;
+      const logError = 'There was an error when inserting a new log';
+      addLog(log, logError, 'lightId', id, req, res);
     })
     .catch((error) => {
       console.error(error);
@@ -46,18 +38,9 @@ const wifiSwitch = (req, res) => {
             .query(`UPDATE lights SET wifi_id=(SELECT id FROM wifis where ssid='${wifi}') WHERE id=${id} RETURNING name`)
             .then((light) => {
               const { name } = light[0][0];
-              db.changelog
-                .create({
-                  log: `${name} switched to ${wifi} wifi`,
-                  lightId: id,
-                })
-                .then((changelog) => {
-                  res.send(changelog);
-                })
-                .catch((error) => {
-                  console.error(error);
-                  res.send('There was an error when inserting a new log');
-                });
+              const log = `${name} switched to ${wifi} wifi`;
+              const logError = 'There was an error when inserting a new log';
+              addLog(log, logError, 'lightId', id, req, res);
             })
             .catch((error) => {
               console.error(error);
