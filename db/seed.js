@@ -1,8 +1,16 @@
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 
 dotenv.config();
 
 import db from './db-config';
+
+
+let wifiPass = '';
+
+bcrypt.hash('abc123', 10, (err, hash) => {
+  wifiPass = hash;
+});
 
 const addLight = () => db.light.create({
   charging: false,
@@ -16,7 +24,7 @@ const addLight = () => db.light.create({
   switched_on: true,
   connected_wifi: true,
   wifi_id: 1,
-  wifi_pass: 'abc123',
+  wifi_pass: wifiPass,
   changelogs: [
     {
       log: 'Reading light was turned on',
@@ -46,7 +54,7 @@ const addClock = () => db.clock.create({
   location: '(30.764357751686, -120.41747701285)',
   connected_wifi: true,
   wifi_id: 1,
-  wifi_pass: 'abc123',
+  wifi_pass: wifiPass,
   changelogs: [
     {
       log: 'Living room clock was turned on',
@@ -64,7 +72,7 @@ const addClock = () => db.clock.create({
 
 const addWifi = () => db.wifi.create({
   ssid: 'McWifi',
-  password: 'abc123',
+  password: wifiPass,
   protocol: '802.11n',
   switched_on: true,
   security_type: 'WPA2-Personal',
