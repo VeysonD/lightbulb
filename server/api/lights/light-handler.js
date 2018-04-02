@@ -4,6 +4,7 @@ import handleAuth from './auth/light-auth-settings';
 import {
   newLight,
   retrieveAll,
+  retrieveLogs,
   retrieveOne,
 } from './general/light-general';
 import {
@@ -24,6 +25,7 @@ const lightRouter = express.Router();
 
 lightRouter.get('/all', retrieveAll);
 lightRouter.get('/:id', retrieveOne);
+lightRouter.get('/:id/logs', retrieveLogs);
 
 lightRouter.post('/new', newLight);
 lightRouter.post('/:id/*', handleAuth);

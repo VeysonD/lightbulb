@@ -81,6 +81,31 @@ const retrieveAll = (req, res) => {
     });
 };
 
+const retrieveLogs = (req, res) => {
+  const { id } = req.params;
+  db.changelog
+    .findAll({
+      where: {
+        lightId: id,
+      },
+    })
+    .then((data) => {
+      if (data.length === 0) {
+        res.send('There are no logs for this device');
+      } else {
+        const logs = data.map((log) => {
+          const logData = log.dataValues;
+          return [logData.log, logData.createdAt];
+        });
+        res.send(logs);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send('There was an error when trying to find the logs');
+    });
+};
+
 const retrieveOne = (req, res) => {
   const { id } = req.params;
   db.sequelize
@@ -94,4 +119,4 @@ const retrieveOne = (req, res) => {
     });
 };
 
-export { newLight, retrieveAll, retrieveOne };
+export { newLight, retrieveAll, retrieveLogs, retrieveOne };
