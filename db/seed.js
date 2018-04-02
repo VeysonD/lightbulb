@@ -15,7 +15,7 @@ bcrypt.hash('abc123', 10, (err, hash) => {
 const addLight = () => db.light.create({
   charging: false,
   color: 'white',
-  dim: true,
+  dim: 0,
   ip: '127.0.0.1',
   latitude: -122.417477,
   longitude: 37.76435775,

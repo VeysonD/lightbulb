@@ -3,7 +3,7 @@ const LightSchema = (sequelize, DataTypes) => {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     charging: DataTypes.BOOLEAN,
     color: DataTypes.STRING,
-    dim: DataTypes.BOOLEAN,
+    dim: DataTypes.INTEGER,
     ip: DataTypes.STRING,
     latitude: DataTypes.DECIMAL,
     longitude: DataTypes.DECIMAL,
