@@ -31,7 +31,7 @@ const changeColor = (req, res) => {
 
 const changeIp = (req, res) => {
   const { id } = req.locals;
-  const ip = req.body;
+  const { ip } = req.body;
 
   if (ip) {
     db.light
@@ -44,8 +44,8 @@ const changeIp = (req, res) => {
         returning: true,
       })
       .then((light) => {
-        const { name } = light[1][0].datavalues;
-        const log = `${name}'s IP was updated`;
+        const { name } = light[1][0].dataValues;
+        const log = `${name}'s IP was updated to ${ip}`;
         const logError = 'There was an error when inserting a new log';
         addLog(log, logError, 'lightId', id, req, res);
       })
