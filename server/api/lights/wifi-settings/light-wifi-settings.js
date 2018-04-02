@@ -3,30 +3,8 @@ import bcrypt from 'bcrypt';
 import db from './../../../../db/db-config';
 import addLog from './../../utils/logger';
 
-const wifiOff = (req, res) => {
-  const { id } = req.locals;
-  db.sequelize
-    .query(`UPDATE lights SET connected_wifi = NOT connected_wifi WHERE id = ${id} RETURNING name, connected_wifi, (SELECT ssid FROM wifis INNER JOIN lights ON lights.wifi_id=wifis.id)`)
-    .spread((light) => {
-      const { name, ssid } = light[0];
-      const connectedWifi = light[0].connected_wifi;
-      let textLog = '';
-      if (connectedWifi) {
-        textLog = 'connected to';
-      } else {
-        textLog = 'disconnected from';
-      }
-      const log = `${name} was ${textLog} ${ssid} wifi`;
-      const logError = 'There was an error when inserting a new log';
-      addLog(log, logError, 'lightId', id, req, res);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.send('There was an error when switching the light connection to the wifi');
-    });
-};
 
-const wifiSwitch = (req, res) => {
+const wifiChange = (req, res) => {
   const { id } = req.locals;
   const { wifi, password } = req.body;
   if (wifi && password) {
@@ -65,4 +43,58 @@ const wifiSwitch = (req, res) => {
   }
 };
 
-export { wifiOff, wifiSwitch };
+const wifiPass = (req, res) => {
+  const { id } = req.locals;
+  const { password } = req.body;
+
+  if (password) {
+    bcrypt.hash(password, 10, (err, hash) => {
+      db.light
+        .update({
+          wifi_pass: hash,
+        }, {
+          where: {
+            id,
+          },
+          returning: true,
+        })
+        .then((light) => {
+          const { name } = light[1][0].datavalues;
+          const log = `${name} changed the saved wifi password`;
+          const logError = 'There was an error when inserting a new log';
+          addLog(log, logError, 'lightId', id, req, res);
+        })
+        .catch((error) => {
+          console.error(error);
+          res.send('There was an error when updating the password');
+        });
+    });
+  } else {
+    res.send('An invalid wifi or password was provided');
+  }
+};
+
+const wifiSwitch = (req, res) => {
+  const { id } = req.locals;
+  db.sequelize
+    .query(`UPDATE lights SET connected_wifi = NOT connected_wifi WHERE id = ${id} RETURNING name, connected_wifi, (SELECT ssid FROM wifis INNER JOIN lights ON lights.wifi_id=wifis.id)`)
+    .spread((light) => {
+      const { name, ssid } = light[0];
+      const connectedWifi = light[0].connected_wifi;
+      let textLog = '';
+      if (connectedWifi) {
+        textLog = 'connected to';
+      } else {
+        textLog = 'disconnected from';
+      }
+      const log = `${name} was ${textLog} ${ssid} wifi`;
+      const logError = 'There was an error when inserting a new log';
+      addLog(log, logError, 'lightId', id, req, res);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send('There was an error when switching the light connection to the wifi');
+    });
+};
+
+export { wifiChange, wifiPass, wifiSwitch };
