@@ -10,7 +10,7 @@ import {
 import {
   wifiChange,
   wifiPass,
-  wifiSwitch,
+  wifiToggleOff,
 } from './wifi-settings/light-wifi-settings';
 import {
   changeColor,
@@ -37,7 +37,7 @@ lightRouter.post('/:id/ip', changeIp);
 
 lightRouter.post('/:id/wifi-change', wifiChange);
 lightRouter.post('/:id/wifi-pass-update', wifiPass);
-lightRouter.post('/:id/wifi-switch', wifiSwitch);
+lightRouter.post('/:id/wifi-toggle-off', wifiToggleOff);
 
 lightRouter.delete('/:id/delete', deleteLight);
 

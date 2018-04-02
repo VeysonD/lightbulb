@@ -1,13 +1,17 @@
 import db from './../../../db/db-config';
 
-const addLog = (logMessage, item, id, req, res) => {
+const addLog = (logMessage, item, id, req, res, next) => {
   const entry = {};
   entry[item] = id;
   entry.log = logMessage;
   db.changelog
     .create(entry)
     .then((changelog) => {
-      res.send(changelog);
+      if (next) {
+        next();
+      } else {
+        res.send(changelog);
+      }
     })
     .catch((error) => {
       console.error(error);

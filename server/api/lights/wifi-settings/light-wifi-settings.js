@@ -72,7 +72,7 @@ const wifiPass = (req, res) => {
   }
 };
 
-const wifiSwitch = (req, res) => {
+const wifiToggleOff = (req, res) => {
   const { id } = req.locals;
   db.sequelize
     .query(`UPDATE lights SET connected_wifi = NOT connected_wifi WHERE id = ${id} RETURNING name, connected_wifi, (SELECT ssid FROM wifis INNER JOIN lights ON lights.wifi_id=wifis.id)`)
@@ -94,4 +94,4 @@ const wifiSwitch = (req, res) => {
     });
 };
 
-export { wifiChange, wifiPass, wifiSwitch };
+export { wifiChange, wifiPass, wifiToggleOff };
