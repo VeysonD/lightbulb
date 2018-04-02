@@ -70,4 +70,25 @@ const deleteLight = (req, res) => {
     });
 };
 
-export { changeColor, changeSwitch, deleteLight };
+const retrieveAll = (req, res) => {
+  db.light
+    .findAll()
+    .then((lights) => {
+      res.send(lights);
+    });
+};
+
+const retrieveOne = (req, res) => {
+  const { id } = req.params;
+  db.sequelize
+    .query(`SELECT * FROM lights WHERE id = ${id}`)
+    .then((light) => {
+      res.send(light[0]);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send('There was an error with your request');
+    });
+};
+
+export { changeColor, changeSwitch, deleteLight, retrieveAll, retrieveOne };

@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt'; // MOVE TO AUTH
 import db from './../../../../db/db-config';
 
 
