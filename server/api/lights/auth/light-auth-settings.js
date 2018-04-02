@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import db from './../../../../db/db-config';
 
 
@@ -23,26 +24,28 @@ const handleAuth = (req, res, next) => {
             .query(`SELECT password FROM wifis where id=${wifiId}`)
             .then((passResult) => {
               const wifiTruePass = passResult[0][0].password;
-              if (wifiTruePass === wifiPass) {
-                db.light
-                  .update({
-                    connected_wifi: true,
-                  }, {
-                    where: {
-                      id,
-                    },
-                  })
-                  .then(() => {
-                    req.locals = { id };
-                    next();
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    res.send('There was an error while updating the connection');
-                  });
-              } else {
-                res.send('Light password for wifi is incorrect');
-              }
+              bcrypt.compare(wifiPass, wifiTruePass, (err, check) => {
+                if (check) {
+                  db.light
+                    .update({
+                      connected_wifi: true,
+                    }, {
+                      where: {
+                        id,
+                      },
+                    })
+                    .then(() => {
+                      req.locals = { id };
+                      next();
+                    })
+                    .catch((error) => {
+                      console.error(error);
+                      res.send('There was an error while updating the connection');
+                    });
+                } else {
+                  res.send('Light password for wifi is incorrect');
+                }
+              });
             })
             .catch((error) => {
               console.error(error);
