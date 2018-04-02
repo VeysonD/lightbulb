@@ -21,8 +21,7 @@ const wifiChange = (req, res) => {
                 .then((light) => {
                   const { name } = light[0][0];
                   const log = `${name} switched to ${wifi} wifi`;
-                  const logError = 'There was an error when inserting a new log';
-                  addLog(log, logError, 'lightId', id, req, res);
+                  addLog(log, 'lightId', id, req, res);
                 })
                 .catch((error) => {
                   console.error(error);
@@ -61,8 +60,7 @@ const wifiPass = (req, res) => {
         .then((light) => {
           const { name } = light[1][0].datavalues;
           const log = `${name}'s saved wifi password was changed`;
-          const logError = 'There was an error when inserting a new log';
-          addLog(log, logError, 'lightId', id, req, res);
+          addLog(log, 'lightId', id, req, res);
         })
         .catch((error) => {
           console.error(error);
@@ -88,8 +86,7 @@ const wifiSwitch = (req, res) => {
         textLog = 'disconnected from';
       }
       const log = `${name} was ${textLog} ${ssid} wifi`;
-      const logError = 'There was an error when inserting a new log';
-      addLog(log, logError, 'lightId', id, req, res);
+      addLog(log, 'lightId', id, req, res);
     })
     .catch((error) => {
       console.error(error);

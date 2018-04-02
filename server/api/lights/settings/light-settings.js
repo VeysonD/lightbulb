@@ -19,14 +19,41 @@ const changeColor = (req, res) => {
       } else {
         const { name } = light[1][0].dataValues;
         const log = `${name}'s color changed to ${color}`;
-        const logError = 'There was an error when inserting a new log';
-        addLog(log, logError, 'lightId', id, req, res);
+        addLog(log, 'lightId', id, req, res);
       }
     })
     .catch((error) => {
       console.error(error);
       res.send('There was an error when updating the color');
     });
+};
+
+const changeDim = (req, res) => {
+  const { id } = req.locals;
+  const { dim } = req.body;
+
+  if (dim) {
+    db.light
+      .update({
+        dim,
+      }, {
+        where: {
+          id,
+        },
+        returning: true,
+      })
+      .then((light) => {
+        const { name } = light[1][0].dataValues;
+        const log = `${name}'s dim setting has been turned to ${dim}%`;
+        addLog(log, 'lightId', id, req, res);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.send('There was an error when updating the dim setting');
+      });
+  } else {
+    res.send('Please provide the amount to dim the light');
+  }
 };
 
 const changeIp = (req, res) => {
@@ -46,8 +73,7 @@ const changeIp = (req, res) => {
       .then((light) => {
         const { name } = light[1][0].dataValues;
         const log = `${name}'s IP was updated to ${ip}`;
-        const logError = 'There was an error when inserting a new log';
-        addLog(log, logError, 'lightId', id, req, res);
+        addLog(log, 'lightId', id, req, res);
       })
       .catch((error) => {
         console.error(error);
@@ -72,8 +98,7 @@ const changeSwitch = (req, res) => {
         onText = 'off';
       }
       const log = `${name} was switched ${onText}`;
-      const logError = 'There was an error when inserting a new log';
-      addLog(log, logError, 'lightId', id, req, res);
+      addLog(log, 'lightId', id, req, res);
     })
     .catch((error) => {
       console.error(error);
@@ -120,4 +145,4 @@ const retrieveOne = (req, res) => {
     });
 };
 
-export { changeColor, changeIp, changeSwitch, deleteLight, retrieveAll, retrieveOne };
+export { changeColor, changeDim, changeIp, changeSwitch, deleteLight, retrieveAll, retrieveOne };
