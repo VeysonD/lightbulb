@@ -8,6 +8,7 @@ import {
 } from './wifi-settings/light-wifi-settings';
 import {
   changeColor,
+  changeIp,
   changeSwitch,
   deleteLight,
   retrieveAll,
@@ -24,6 +25,7 @@ lightRouter.post('/:id/*', handleAuth);
 
 lightRouter.post('/:id/color', changeColor);
 lightRouter.post('/:id/switch', changeSwitch);
+lightRouter.post('/:id/ip', changeIp);
 
 lightRouter.post('/:id/wifi-change', wifiChange);
 lightRouter.post('/:id/wifi-pass-update', wifiPass);

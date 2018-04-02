@@ -29,6 +29,35 @@ const changeColor = (req, res) => {
     });
 };
 
+const changeIp = (req, res) => {
+  const { id } = req.locals;
+  const ip = req.body;
+
+  if (ip) {
+    db.light
+      .update({
+        ip,
+      }, {
+        where: {
+          id,
+        },
+        returning: true,
+      })
+      .then((light) => {
+        const { name } = light[1][0].datavalues;
+        const log = `${name}'s IP was updated`;
+        const logError = 'There was an error when inserting a new log';
+        addLog(log, logError, 'lightId', id, req, res);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.send('There was an error when updating the IP');
+      });
+  } else {
+    res.send('Please provide an IP');
+  }
+};
+
 const changeSwitch = (req, res) => {
   const { id } = req.locals;
   db.sequelize
@@ -91,4 +120,4 @@ const retrieveOne = (req, res) => {
     });
 };
 
-export { changeColor, changeSwitch, deleteLight, retrieveAll, retrieveOne };
+export { changeColor, changeIp, changeSwitch, deleteLight, retrieveAll, retrieveOne };

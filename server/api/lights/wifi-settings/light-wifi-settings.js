@@ -60,7 +60,7 @@ const wifiPass = (req, res) => {
         })
         .then((light) => {
           const { name } = light[1][0].datavalues;
-          const log = `${name} changed the saved wifi password`;
+          const log = `${name}'s saved wifi password was changed`;
           const logError = 'There was an error when inserting a new log';
           addLog(log, logError, 'lightId', id, req, res);
         })
