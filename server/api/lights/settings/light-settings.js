@@ -84,6 +84,36 @@ const changeIp = (req, res) => {
   }
 };
 
+const changePosition = (req, res) => {
+  const { id } = req.locals;
+  const { latitude, longitude, location } = req.body;
+
+  if (latitude && longitude && location) {
+    db.light
+      .update({
+        latitude,
+        longitude,
+        location,
+      }, {
+        where: {
+          id,
+        },
+        returning: true,
+      })
+      .then((light) => {
+        const { name } = light[1][0].dataValues;
+        const log = `${name}'s position was updated to ${location}`;
+        addLog(log, 'lightId', id, req, res);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.send('There was an error when updating the position');
+      });
+  } else {
+    res.send('Please provide the proper coordinates');
+  }
+};
+
 const changeSwitch = (req, res) => {
   const { id } = req.locals;
   db.sequelize
@@ -145,4 +175,13 @@ const retrieveOne = (req, res) => {
     });
 };
 
-export { changeColor, changeDim, changeIp, changeSwitch, deleteLight, retrieveAll, retrieveOne };
+export {
+  changeColor,
+  changeDim,
+  changeIp,
+  changePosition,
+  changeSwitch,
+  deleteLight,
+  retrieveAll,
+  retrieveOne,
+};
