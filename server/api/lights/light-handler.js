@@ -2,6 +2,11 @@ import express from 'express';
 
 import handleAuth from './auth/light-auth-settings';
 import {
+  newLight,
+  retrieveAll,
+  retrieveOne,
+} from './general/light-general';
+import {
   wifiChange,
   wifiPass,
   wifiSwitch,
@@ -12,8 +17,6 @@ import {
   changeIp,
   changeSwitch,
   deleteLight,
-  retrieveAll,
-  retrieveOne,
 } from './settings/light-settings';
 
 
@@ -22,6 +25,7 @@ const lightRouter = express.Router();
 lightRouter.get('/all', retrieveAll);
 lightRouter.get('/:id', retrieveOne);
 
+lightRouter.post('/new', newLight);
 lightRouter.post('/:id/*', handleAuth);
 
 lightRouter.post('/:id/color', changeColor);
