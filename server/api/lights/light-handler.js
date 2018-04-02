@@ -1,5 +1,4 @@
 import express from 'express';
-import bcrypt from 'bcrypt'; // MOVE TO AUTH
 
 import db from './../../../db/db-config';
 import handleAuth from './auth/light-auth-settings';

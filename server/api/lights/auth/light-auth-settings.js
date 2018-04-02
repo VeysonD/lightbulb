@@ -7,7 +7,6 @@ const handleAuth = (req, res, next) => {
   db.sequelize
     .query(`SELECT connected_wifi, wifi_id, wifi_pass FROM lights WHERE id = ${id}`)
     .then((connectionStatus) => {
-      console.log('What is the connectionStatus: ', connectionStatus);
       const connect = connectionStatus[0];
       if (connect.length === 0) {
         res.send('This light is not associated with any wifi');
@@ -25,7 +24,6 @@ const handleAuth = (req, res, next) => {
             .query(`SELECT password FROM wifis where id=${wifiId}`)
             .then((passResult) => {
               const wifiTruePass = passResult[0][0].password;
-              console.log('PASSWORDS: ', wifiTruePass, wifiPass);
               if (wifiTruePass === wifiPass) {
                 db.light
                   .update({
@@ -35,8 +33,7 @@ const handleAuth = (req, res, next) => {
                       id,
                     },
                   })
-                  .then((connectionUpdate) => {
-                    console.log('What is the connection update: ', connectionUpdate);
+                  .then(() => {
                     req.locals = { id };
                     next();
                   })
