@@ -33,7 +33,8 @@ const wifiOff = (req, res) => {
 };
 
 const wifiSwitch = (req, res) => {
-  const { id, wifi } = req.locals;
+  const { id } = req.locals;
+  const { wifi } = req.body;
   if (wifi) {
     db.sequelize
       .query(`SELECT ssid from wifis WHERE ssid='${wifi}'`)
@@ -44,7 +45,6 @@ const wifiSwitch = (req, res) => {
           db.sequelize
             .query(`UPDATE lights SET wifi_id=(SELECT id FROM wifis where ssid='${wifi}') WHERE id=${id} RETURNING name`)
             .then((light) => {
-              console.log('WHAT IS THE LIGHT: ', light);
               const { name } = light[0][0];
               db.changelog
                 .create({
