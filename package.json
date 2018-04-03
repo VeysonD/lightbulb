@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon --inspect index.js --exec babel-node",
-    "dev:2": "webpack",
+    "dev:2": "webpack -w",
     "postInstall": "webpack -p",
     "seed": "babel-node db/seed.js",
     "start": "NODE_ENV=production babel-node index.js",
@@ -39,6 +39,7 @@
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-loader": "^2.0.0",
