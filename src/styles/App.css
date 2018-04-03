@@ -3,10 +3,14 @@ img {
   width: 100px;
 }
 
+li {
+  display: inline;
+}
+
 .grid-container {
   display: grid;
 }
 
-div {
+.app {
   background-color: pink;
 }
