@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import lightOn from '../assets/light-on.png';
 import lightOff from '../assets/light-off.png';
 
+import './../styles/App.css';
+
 class App extends Component {
   constructor(props) {
     super(props);
