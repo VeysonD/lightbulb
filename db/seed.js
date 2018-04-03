@@ -1,10 +1,9 @@
 import dotenv from 'dotenv';
-import bcrypt from 'bcrypt';
 
 dotenv.config();
 
-import db from './db-config';
-
+const db = require('./db-config').default;
+const bcrypt = require('bcrypt');
 
 let wifiPass = '';
 

@@ -14,9 +14,17 @@
 ## Purpose
 
 ## Setup
-
+1. Set up a database in PostgreSQL
+2. Make a .env file following the example given in .env.example
+3. Run the following to install and set up the program
+  ```
+  npm run initial
+  ```
+4. To run the program after the initial set up
+```
+npm start
+```
 ## Use
-
 ## Demo
 
 ## Screenshots

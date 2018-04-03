@@ -4,11 +4,13 @@
   "description": "",
   "private": true,
   "scripts": {
+    "bundle": "webpack",
     "dev": "nodemon --inspect index.js --exec babel-node",
     "dev:2": "webpack -w",
+    "initial": "npm install && npm run seed && npm run bundle && npm start",
     "postInstall": "webpack -p",
     "seed": "babel-node db/seed.js",
-    "start": "NODE_ENV=production babel-node index.js",
+    "start": "babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

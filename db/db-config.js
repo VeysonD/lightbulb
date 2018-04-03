@@ -1,8 +1,9 @@
 import Sequelize from 'sequelize';
 import readModels from './utils/read-models';
 
-const sequelize = new Sequelize('mydevices', process.env.DB_USERNAME || 'postgres', process.env.DB_PASSWORD || 'root', {
-  host: process.env.DB_URL || 'localhost',
+
+const sequelize = new Sequelize('mydevices', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+  host: process.env.DB_URL,
   dialect: 'postgres',
   pool: {
     max: 5,
