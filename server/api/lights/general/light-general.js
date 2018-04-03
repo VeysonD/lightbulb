@@ -32,7 +32,6 @@ const newLight = (req, res) => {
       } else {
         const wifiHash = data[0].dataValues.password;
         const wifiId = data[0].dataValues.id;
-        console.log('shape of the data: ', data);
         bcrypt.compare(wifiPass, wifiHash, (err, check) => {
           if (check) {
             const connectedWifi = true;

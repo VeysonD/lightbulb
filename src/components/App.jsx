@@ -7,10 +7,13 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      addLight: false,
       lights: [],
       loaded: false,
       wifis: [],
     };
+    this.handleLightSubmit = this.handleLightSubmit.bind(this);
+    this.handleNewLight = this.handleNewLight.bind(this);
     this.fetchLights = this.fetchLights.bind(this);
     this.fetchWifis = this.fetchWifis.bind(this);
   }
@@ -35,7 +38,6 @@ class App extends Component {
     fetch('/api/wifis/all')
       .then(res => res.json())
       .then((wifis) => {
-        console.log('What are the wifis: ', wifis);
         this.setState({
           wifis,
           loaded: true,
@@ -44,14 +46,64 @@ class App extends Component {
         console.error(error);
       });
   }
+  handleLightSubmit() {
+    const lightInfo = {};
+    document.querySelectorAll('#add-light input').forEach((input) => {
+      lightInfo[input.name] = input.value;
+    });
+    fetch('/api/lights/new', {
+      body: JSON.stringify(lightInfo),
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(() => {
+        this.setState({
+          addLight: false,
+        });
+        this.fetchLights();
+      }, (error) => {
+        console.error(error);
+      });
+  }
+  handleNewLight() {
+    this.setState({
+      addLight: !this.state.addLight,
+    });
+  }
   render() {
-    const { lights, loaded, wifis } = this.state;
+    const {
+      addLight, lights, loaded, wifis,
+    } = this.state;
 
     return (
       <div className="app">
         <nav className="app-nav">
           <li>
-            <button>Add new light [COMING SOON]</button>
+            {addLight
+              ?
+                <div id="add-light">
+                  <form name="light-form">
+                    <p>Light name: <input name="name" type="text" /></p>
+                    <p>Light color: <input name="color" type="text" /></p>
+                    <p>Light dim: <input name="dim" type="number" /></p>
+                    <p>Light ip: <input name="ip" type="text" /></p>
+                    <p>Latitude: <input name="latitude" type="number" /></p>
+                    <p>Longitude: <input name="longitude" type="number" /></p>
+                    <p>Location: <input name="location" type="text" /></p>
+                    <p>WiFi: <input name="wifi" type="text" /></p>
+                    <p>WiFi Password: <input name="wifiPass" type="password" /></p>
+                    <p>Currently on: <input name="switchedOn" type="checkbox" /></p>
+                    <p>Currently charging: <input name="charging" type="checkbox" /></p>
+                  </form>
+                  <button onClick={this.handleLightSubmit}>Submit</button>
+                  <button onClick={this.handleNewLight}>Cancel</button>
+                </div>
+              :
+                <button onClick={this.handleNewLight}>Add new light</button>
+            }
           </li>
         </nav>
         <div className="devices">

@@ -91,7 +91,7 @@ export default class Light extends Component {
           </li>
         </div>
         <div className="light-logs">
-          <h2>{name} logs</h2>
+          <h1>{name} logs</h1>
           {viewLogs
             ?
             logs.map((log) => {
