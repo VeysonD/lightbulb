@@ -15,6 +15,7 @@ class App extends Component {
 
   componentDidMount() {
     const wifiList = [];
+
     fetch('/api/wifis/all')
       .then(res => res.json())
       .then((wifis) => {
@@ -23,6 +24,7 @@ class App extends Component {
       }, (error) => {
         console.error(error);
       });
+
     fetch('/api/lights/all')
       .then(res => res.json())
       .then((lights) => {
@@ -37,8 +39,8 @@ class App extends Component {
       });
   }
   render() {
-    const { lights, loaded } = this.state;
-    console.log('loaded: ', loaded);
+    const { lights, loaded, wifis } = this.state;
+
     return (
       <div className="app">
         <nav>
@@ -59,16 +61,19 @@ class App extends Component {
           <div className="lights">
             {loaded
               ?
-              lights.map(light =>
-                (
+              lights.map((light) => {
+                const lightWifi = wifis.filter(wifi => wifi.id === light.wifi_id);
+                return (
                   <Light
                     name={light.name}
                     dim={light.dim}
                     ip={light.ip}
                     location={light.location}
                     switch={light.switched_on}
+                    wifi={lightWifi.ssid}
                   />
-              ))
+                );
+              })
               :
               <div>Loading your devices</div>
           }
