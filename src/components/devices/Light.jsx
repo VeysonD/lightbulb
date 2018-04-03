@@ -95,9 +95,10 @@ export default class Light extends Component {
           {viewLogs
             ?
             logs.map((log) => {
-              console.log('What does the log look like: ', log);
+              const text = log.join(' at ');
+              console.log('what is the text:', text);
               return (
-                <li>{log}</li>
+                <li>{text}</li>
               );
             })
             :

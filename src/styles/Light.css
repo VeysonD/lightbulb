@@ -6,12 +6,10 @@ img {
 .light {
   background-color: #00FFFF;
   display: inline-grid;
-  grid-template: "picture picture text text"
-                  "picture picture text text"
-                  "picture picture text text"
-                  "picture picture text text"
-                  "logs logs logs logs"
-                  "logs logs logs logs";
+  grid-template: "picture picture text text logs logs logs logs"
+                  "picture picture text text logs logs logs logs"
+                  "picture picture text text logs logs logs logs"
+                  "picture picture text text logs logs logs logs";
   grid-gap: 30px;
 }
 
