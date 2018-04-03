@@ -76,7 +76,6 @@ const retrieveAll = (req, res) => {
   db.light
     .findAll()
     .then((lights) => {
-      console.log(lights);
       res.send(lights);
     });
 };
@@ -115,7 +114,7 @@ const retrieveOne = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send('There was an error with your request');
+      res.send('There was an error with your light request');
     });
 };
 
