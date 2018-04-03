@@ -13,6 +13,8 @@ const config = {
   output: {
     path: paths.PUBLIC,
     filename: 'bundle.js',
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -38,10 +40,14 @@ const config = {
         test: /\.(png|jpg|gif)$/,
         loader: 'file-loader',
       },
+      {
+        test: /\.(css)$/,
+        loader: 'css-loader',
+      },
     ],
   },
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['css', '.js', '.jsx'],
   },
   stats: {
     colors: true,
