@@ -1,16 +1,20 @@
-img {
-  height: 200px;
-  width: 100px;
+.app {
+  display: grid;
+  grid-template: [header-left] "head head" 1fr [header-right]
+                 [main-left]   "main  main" 3fr  [main-right]
+                 [footer-left] "foot  foot" 30px [footer-right]
 }
 
-li {
+.app-nav {
+  grid-area: head;
+  align-self: center;
+}
+
+.app-nav li {
   display: inline;
 }
 
-.grid-container {
-  display: grid;
-}
-
-.app {
-  background-color: pink;
+.devices {
+  grid-area: main;
+  align-self: center;
 }

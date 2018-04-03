@@ -11,28 +11,34 @@ class App extends Component {
       loaded: false,
       wifis: [],
     };
+    this.fetchLights = this.fetchLights.bind(this);
+    this.fetchWifis = this.fetchWifis.bind(this);
   }
 
   componentDidMount() {
-    const wifiList = [];
-
-    fetch('/api/wifis/all')
-      .then(res => res.json())
-      .then((wifis) => {
-        console.log('What are the wifis: ', wifis);
-        wifiList.push(...wifis);
-      }, (error) => {
-        console.error(error);
-      });
-
+    this.fetchLights();
+    this.fetchWifis();
+  }
+  fetchLights() {
     fetch('/api/lights/all')
       .then(res => res.json())
       .then((lights) => {
         console.log('What are the lights: ', lights);
         this.setState({
           lights,
+        });
+      }, (error) => {
+        console.error(error);
+      });
+  }
+  fetchWifis() {
+    fetch('/api/wifis/all')
+      .then(res => res.json())
+      .then((wifis) => {
+        console.log('What are the wifis: ', wifis);
+        this.setState({
+          wifis,
           loaded: true,
-          wifis: wifiList,
         });
       }, (error) => {
         console.error(error);
@@ -43,18 +49,9 @@ class App extends Component {
 
     return (
       <div className="app">
-        <nav>
+        <nav className="app-nav">
           <li>
-            <button>Add new light</button>
-          </li>
-          <li>
-            <button>Change Dim</button>
-          </li>
-          <li>
-            <button>Change Color</button>
-          </li>
-          <li>
-            <button>Update IP</button>
+            <button>Add new light [COMING SOON]</button>
           </li>
         </nav>
         <div className="devices">
@@ -62,21 +59,25 @@ class App extends Component {
             {loaded
               ?
               lights.map((light) => {
-                const lightWifi = wifis.filter(wifi => wifi.id === light.wifi_id);
+                const lightWifi = wifis.filter(wifi => wifi.id === light.wifi_id)[0];
+                console.log('What is the lightWifi: ', lightWifi);
                 return (
                   <Light
                     name={light.name}
                     dim={light.dim}
+                    fetchHandler={this.fetchLights}
+                    key={light.id}
+                    id={light.id}
                     ip={light.ip}
                     location={light.location}
-                    switch={light.switched_on}
+                    switched={light.switched_on}
                     wifi={lightWifi.ssid}
                   />
                 );
               })
               :
               <div>Loading your devices</div>
-          }
+            }
           </div>
         </div>
       </div>
