@@ -26,7 +26,6 @@ class App extends Component {
     fetch('/api/lights/all')
       .then(res => res.json())
       .then((lights) => {
-        console.log('What are the lights: ', lights);
         this.setState({
           lights,
         });
@@ -112,7 +111,6 @@ class App extends Component {
               ?
               lights.map((light) => {
                 const lightWifi = wifis.filter(wifi => wifi.id === light.wifi_id)[0];
-                console.log('What is the lightWifi: ', lightWifi);
                 return (
                   <Light
                     name={light.name}

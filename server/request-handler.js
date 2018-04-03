@@ -12,7 +12,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  console.log('Testing get');
   res.end('GET');
 });
 

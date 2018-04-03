@@ -26,7 +26,6 @@ export default class Light extends Component {
       fetch(`/api/lights/${id}/logs`)
         .then(res => res.json())
         .then((logs) => {
-          console.log('What does all the logs look like: ', logs);
           this.setState({
             logs,
             viewLogs: true,
@@ -42,8 +41,7 @@ export default class Light extends Component {
       method: 'POST',
     })
       .then(res => res.json())
-      .then((log) => {
-        console.log('What is the log: ', log);
+      .then(() => {
         this.props.fetchHandler();
       }, (error) => {
         console.error(error);
@@ -55,7 +53,6 @@ export default class Light extends Component {
     } = this.props;
     const { logs, viewLogs } = this.state;
     const status = switched ? 'on' : 'off';
-    console.log('What are the props: ', this.props);
     return (
       <div className="light">
         <div className="lightbulb">
@@ -96,7 +93,6 @@ export default class Light extends Component {
             ?
             logs.map((log) => {
               const text = log.join(' at ');
-              console.log('what is the text:', text);
               return (
                 <li>{text}</li>
               );
