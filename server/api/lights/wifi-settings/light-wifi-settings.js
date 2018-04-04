@@ -21,7 +21,8 @@ const wifiChange = (req, res) => {
                 .then((light) => {
                   const { name } = light[0][0];
                   const log = `${name} switched to ${wifi} wifi`;
-                  addLog(log, 'lightId', id, req, res);
+                  addLog(log, 'lightId', id);
+                  res.send(log);
                 })
                 .catch((error) => {
                   console.error(error);
@@ -60,7 +61,8 @@ const wifiPass = (req, res) => {
         .then((light) => {
           const { name } = light[1][0].datavalues;
           const log = `${name}'s saved wifi password was changed`;
-          addLog(log, 'lightId', id, req, res);
+          addLog(log, 'lightId', id);
+          res.send(log);
         })
         .catch((error) => {
           console.error(error);
@@ -86,7 +88,8 @@ const wifiToggleOff = (req, res) => {
         textLog = 'disconnected from';
       }
       const log = `${name} was ${textLog} ${ssid} wifi`;
-      addLog(log, 'lightId', id, req, res);
+      addLog(log, 'lightId', id);
+      res.send(log);
     })
     .catch((error) => {
       console.error(error);

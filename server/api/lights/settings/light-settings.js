@@ -12,14 +12,13 @@ const changeColor = (req, res) => {
         id,
       },
       returning: true,
+      individualHooks: true,
     })
     .then((light) => {
       if (light[1].length === 0) {
         res.send('That light does not exist');
       } else {
-        const { name } = light[1][0].dataValues;
-        const log = `${name}'s color changed to ${color}`;
-        addLog(log, 'lightId', id, req, res);
+        res.send(light[1][0].dataValues.id);
       }
     })
     .catch((error) => {
@@ -41,11 +40,12 @@ const changeDim = (req, res) => {
           id,
         },
         returning: true,
+        individualHooks: true,
       })
       .then((light) => {
         const { name } = light[1][0].dataValues;
         const log = `${name}'s dim setting has been turned to ${dim}%`;
-        addLog(log, 'lightId', id, req, res);
+        res.send(log);
       })
       .catch((error) => {
         console.error(error);
@@ -69,11 +69,12 @@ const changeIp = (req, res) => {
           id,
         },
         returning: true,
+        individualHooks: true,
       })
       .then((light) => {
         const { name } = light[1][0].dataValues;
         const log = `${name}'s IP was updated to ${ip}`;
-        addLog(log, 'lightId', id, req, res);
+        res.send(log);
       })
       .catch((error) => {
         console.error(error);
@@ -99,11 +100,12 @@ const changePosition = (req, res) => {
           id,
         },
         returning: true,
+        individualHooks: true,
       })
       .then((light) => {
         const { name } = light[1][0].dataValues;
         const log = `${name}'s position was updated to ${location}`;
-        addLog(log, 'lightId', id, req, res);
+        res.send(log);
       })
       .catch((error) => {
         console.error(error);
@@ -128,7 +130,7 @@ const changeSwitch = (req, res) => {
         onText = 'off';
       }
       const log = `${name} was switched ${onText}`;
-      addLog(log, 'lightId', id, req, res);
+      addLog(log, 'lightId', id);
     })
     .catch((error) => {
       console.error(error);

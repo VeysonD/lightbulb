@@ -53,7 +53,8 @@ const newLight = (req, res) => {
               .then((light) => {
                 const { id } = light.dataValues;
                 const log = `${color} light was added to ${wifi} network`;
-                addLog(log, 'lightId', id, req, res);
+                addLog(log, 'lightId', id);
+                res.send(`New light named ${name} was created`);
               })
               .catch((error) => {
                 console.error(error);

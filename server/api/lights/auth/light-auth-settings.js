@@ -41,7 +41,8 @@ const handleAuth = (req, res, next) => {
                     .then(() => {
                       req.locals = { id };
                       const log = `${lightName} was connected to ${wifiName} wifi`;
-                      addLog(log, 'lightId', id, req, res, next);
+                      addLog(log, 'lightId', id);
+                      next();
                     })
                     .catch((error) => {
                       console.error(error);
