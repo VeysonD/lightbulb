@@ -6,6 +6,7 @@ import addLog from './../../utils/logger';
 
 const handleAuth = (req, res, next) => {
   const { id } = req.params;
+  const { password } = req.body;
   db.sequelize
     .query(`SELECT connected_wifi, name, wifi_id, wifi_pass FROM lights WHERE id = ${id}`)
     .then((connectionStatus) => {
@@ -16,7 +17,7 @@ const handleAuth = (req, res, next) => {
         const connectedWifi = connect[0].connected_wifi;
         const lightName = connect[0].name;
         const wifiId = connect[0].wifi_id;
-        const wifiPass = connect[0].wifi_pass;
+        const wifiPass = password || connect[0].wifi_pass;
         if (connectedWifi) {
           req.locals = { id };
           next();
@@ -29,6 +30,7 @@ const handleAuth = (req, res, next) => {
               const wifiTruePass = passResult[0][0].password;
               const wifiName = passResult[0][0].ssid;
               bcrypt.compare(wifiPass, wifiTruePass, (err, check) => {
+                console.log('What is check: ', wifiTruePass, wifiPass);
                 if (check) {
                   db.light
                     .update({

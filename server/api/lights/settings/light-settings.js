@@ -18,7 +18,7 @@ const changeColor = (req, res) => {
       if (light[1].length === 0) {
         res.send('That light does not exist');
       } else {
-        res.send(light[1][0].dataValues.id);
+        res.send(`${light[1][0].dataValues.name} changed to ${color}`);
       }
     })
     .catch((error) => {

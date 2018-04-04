@@ -48,27 +48,26 @@ const wifiPass = (req, res) => {
   const { password } = req.body;
 
   if (password) {
-    bcrypt.hash(password, 10, (err, hash) => {
-      db.light
-        .update({
-          wifi_pass: hash,
-        }, {
-          where: {
-            id,
-          },
-          returning: true,
-        })
-        .then((light) => {
-          const { name } = light[1][0].datavalues;
-          const log = `${name}'s saved wifi password was changed`;
-          addLog(log, 'lightId', id);
-          res.send(log);
-        })
-        .catch((error) => {
-          console.error(error);
-          res.send('There was an error when updating the password');
-        });
-    });
+    db.light
+      .update({
+        connected_wifi: false,
+        wifi_pass: password,
+      }, {
+        where: {
+          id,
+        },
+        returning: true,
+      })
+      .then((light) => {
+        const { name } = light[1][0].dataValues;
+        const log = `${name}'s saved wifi password was changed to ${password}`;
+        addLog(log, 'lightId', id);
+        res.send(log);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.send('There was an error when updating the password');
+      });
   } else {
     res.send('An invalid wifi or password was provided');
   }

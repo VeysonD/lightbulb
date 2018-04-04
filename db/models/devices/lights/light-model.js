@@ -24,7 +24,7 @@ const LightSchema = (sequelize, DataTypes) => {
           changed.forEach((change) => {
             const prev = instance.previous(change);
             const curr = instance.dataValues[change];
-            const log = `${name}'s ${change} changed to ${curr} from ${prev}`;
+            const log = `${name}'s ${change} changed from ${prev} to ${curr}`;
             addLog(log, 'lightId', id);
           });
         }
