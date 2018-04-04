@@ -131,6 +131,7 @@ const changeSwitch = (req, res) => {
       }
       const log = `${name} was switched ${onText}`;
       addLog(log, 'lightId', id);
+      res.send(JSON.stringify(log));
     })
     .catch((error) => {
       console.error(error);
