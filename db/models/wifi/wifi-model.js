@@ -1,22 +1,33 @@
 const WifiSchema = (sequelize, DataTypes) => {
   const Wifi = sequelize.define('wifi', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    ssid: DataTypes.STRING,
+    ssid: { type: DataTypes.STRING, allowNull: false },
     password: DataTypes.STRING,
     switched_on: DataTypes.BOOLEAN,
-    protocol: DataTypes.STRING,
-    security_type: DataTypes.STRING,
-    network_band: DataTypes.STRING,
-    network_channel: DataTypes.INTEGER,
-    ip4_address: DataTypes.STRING,
-    ip4_dns: DataTypes.STRING,
+    protocol: { type: DataTypes.STRING, allowNull: false },
+    security_type: { type: DataTypes.STRING, allowNull: false },
+    network_band: { type: DataTypes.STRING, allowNull: false },
+    network_channel: { type: DataTypes.STRING, allowNull: false },
+    ip4_address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIP: true,
+      },
+    },
+    ip4_dns: {
+      type: DataTypes.STRING,
+      validate: {
+        isIP: true,
+      },
+    },
     latitude: DataTypes.DECIMAL,
     longitude: DataTypes.DECIMAL,
-    location: DataTypes.STRING,
+    location: { type: DataTypes.STRING, allowNull: false },
     manufacturer: DataTypes.STRING,
     description: DataTypes.STRING,
     driver_version: DataTypes.STRING,
-    physical_address: DataTypes.STRING,
+    physical_address: { type: DataTypes.STRING, allowNull: false },
   });
 
   Wifi.associate = (models) => {
