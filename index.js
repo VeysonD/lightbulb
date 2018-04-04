@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import app from './server/request-handler';
+const app = require('./server/request-handler').default;
 
 const { SERVER, PORT } = process.env;
 
