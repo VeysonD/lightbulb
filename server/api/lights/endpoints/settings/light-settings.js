@@ -1,5 +1,5 @@
-import db from './../../../../db/db-config';
-import addLog from './../../utils/logger';
+import db from './../../../../../db/db-config';
+import addLog from './../../../utils/logger';
 
 const changeColor = (req, res) => {
   const { id } = req.locals;
