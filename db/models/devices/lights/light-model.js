@@ -1,4 +1,4 @@
-import addLog from './../../../../server/api/utils/logger';
+import addLog from './../../../../server/utils/logger';
 
 const LightSchema = (sequelize, DataTypes) => {
   const Light = sequelize.define('light', {

@@ -28,7 +28,7 @@ const wifiPassCtrl = (password, id) =>
 
 const wifiUpdate = (wifi, password, id) =>
   new Promise((resolve, reject) => {
-    db.wifi
+    db.sequelize
       .query(`UPDATE lights SET wifi_id=(SELECT id FROM wifis WHERE ssid='${wifi}'), wifi_pass='${password}' WHERE id=${id} RETURNING name`)
       .then((light) => {
         const { name } = light[0][0];
@@ -59,14 +59,30 @@ const wifiChangeCtrl = (wifi, password, id) =>
           reject(new Error('The wifi does not exist on the system'));
         } else {
           const wifiHash = data[0].dataValues.password;
-          const passCorrect = comparePass(password, wifiHash);
-          if (passCorrect) {
-            wifiUpdate(wifi, password, id);
-            resolve();
-          } else {
-            reject(new Error('Password is invalid for the specified wifi'));
-          }
+          comparePass(password, wifiHash)
+            .then((check) => {
+              if (check) {
+                wifiUpdate(wifi, password, id)
+                  .then(() => {
+                    resolve();
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                    reject(error);
+                  });
+              } else {
+                reject(new Error('Password is invalid for the specified wifi'));
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+              reject(new Error(`There was an error while checking the password ${error}`));
+            });
         }
+      })
+      .catch((error) => {
+        console.error(error);
+        reject(new Error('There was an error when updating the wifi'));
       });
   });
 
@@ -85,6 +101,7 @@ const wifiToggleOffCtrl = id =>
         }
         const log = `${name} was ${textLog} ${ssid} wifi`;
         addLog(log, 'lightId', id);
+        resolve();
       })
       .catch((error) => {
         console.error(error);

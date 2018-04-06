@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import db from './../../../../db/db-config';
-import addLog from './../../utils/logger';
+import addLog from './../../../utils/logger';
 
 
 const handleAuth = (req, res, next) => {
@@ -30,7 +30,6 @@ const handleAuth = (req, res, next) => {
               const wifiTruePass = passResult[0][0].password;
               const wifiName = passResult[0][0].ssid;
               bcrypt.compare(wifiPass, wifiTruePass, (err, check) => {
-                console.log('What is check: ', wifiTruePass, wifiPass);
                 if (check) {
                   db.light
                     .update({

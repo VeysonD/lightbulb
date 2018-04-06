@@ -1,4 +1,4 @@
-import addLog from './../../../../server/api/utils/logger';
+import addLog from './../../../../server/utils/logger';
 
 const ClockSchema = (sequelize, DataTypes) => {
   const Clock = sequelize.define('clock', {
