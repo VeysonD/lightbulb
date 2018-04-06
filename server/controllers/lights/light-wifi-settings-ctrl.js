@@ -1,4 +1,4 @@
-import db from './../../../../db/db-config';
+import db from './../../../db/db-config';
 import { comparePass } from './../../utils/password-check';
 import addLog from './../../utils/logger';
 
