@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import db from './../../../../../db/db-config';
-import addLog from './../../../utils/logger';
+import db from './../../../../db/db-config';
+import addLog from './../../utils/logger';
 
 const newLight = (req, res) => {
   const {
