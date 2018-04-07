@@ -1,24 +1,24 @@
 import express from 'express';
 
-import handleAuth from './auth/light-auth-settings';
+import handleAuth from './lights/light-auth-settings';
 import {
   newLight,
   retrieveAll,
   retrieveLogs,
   retrieveOne,
-} from './general/light-general';
+} from './lights/light-general';
 import {
   wifiChange,
   wifiPass,
   wifiToggleOff,
-} from './wifi-settings/light-wifi-settings';
+} from './lights/light-wifi-settings';
 import {
   changeColor,
   changeDim,
   changeIp,
   changeSwitch,
   deleteLight,
-} from './settings/light-settings';
+} from './lights/light-settings';
 
 
 const lightRouter = express.Router();

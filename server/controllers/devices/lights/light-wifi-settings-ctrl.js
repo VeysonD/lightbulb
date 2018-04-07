@@ -1,6 +1,6 @@
-import db from './../../../db/db-config';
-import { comparePass } from './../../utils/password-check';
-import addLog from './../../utils/logger';
+import db from './../../../../db/db-config';
+import { comparePass } from './../../../utils/password-check';
+import addLog from './../../changelogs/changelog-ctrl';
 
 
 const wifiPassCtrl = (password, id) =>

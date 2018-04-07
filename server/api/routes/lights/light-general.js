@@ -3,7 +3,7 @@ import {
   retrieveAllCtrl,
   retrieveLogsCtrl,
   retrieveOneCtrl,
-} from './../../../controllers/lights/light-general-ctrl';
+} from './../../../controllers/devices/lights/light-general-ctrl';
 
 const newLight = (req, res) => {
   const {

@@ -2,7 +2,7 @@ import {
   wifiChangeCtrl,
   wifiPassCtrl,
   wifiToggleOffCtrl,
-} from './../../../controllers/lights/light-wifi-settings-ctrl';
+} from './../../../controllers/devices/lights/light-wifi-settings-ctrl';
 
 
 const wifiChange = (req, res) => {

@@ -1,5 +1,6 @@
-import db from './../../../db/db-config';
-import addLog from './../../utils/logger';
+import db from './../../../../db/db-config';
+import addLog from './../../changelogs/changelog-ctrl';
+
 
 const changeColorCtrl = (color, id) =>
   new Promise((resolve, reject) => {

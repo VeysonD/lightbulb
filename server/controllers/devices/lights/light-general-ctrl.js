@@ -1,6 +1,6 @@
-import db from './../../../db/db-config';
-import { comparePass } from './../../utils/password-check';
-import addLog from './../../utils/logger';
+import db from './../../../../db/db-config';
+import { comparePass } from './../../../utils/password-check';
+import addLog from './../../changelogs/changelog-ctrl';
 
 
 const createNewLight = (
@@ -28,7 +28,7 @@ const createNewLight = (
         wifi_pass: wifiPass,
       })
       .then((light) => {
-        const { id } = light.dataValues; // TODO: CHECK ID
+        const { id } = light.dataValues;
         const log = `${color} light was added to ${wifi} network`;
         addLog(log, 'lightId', id);
         resolve(log);

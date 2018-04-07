@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
 import db from './../../../../db/db-config';
-import addLog from './../../../utils/logger';
+import addLog from './../../../controllers/changelogs/changelog-ctrl';
 
 
 const handleAuth = (req, res, next) => {

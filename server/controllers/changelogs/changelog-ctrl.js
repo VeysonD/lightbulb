@@ -1,4 +1,5 @@
-import db from './../../db/db-config';
+import db from './../../../db/db-config';
+
 
 const addLog = (logMessage, item, id) => {
   const entry = {};

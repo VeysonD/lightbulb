@@ -1,4 +1,4 @@
-import addLog from './../../../../server/utils/logger';
+import addLog from './../../../../server/controllers/changelogs/changelog-ctrl';
 
 const LightSchema = (sequelize, DataTypes) => {
   const Light = sequelize.define('light', {

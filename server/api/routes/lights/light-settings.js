@@ -5,12 +5,12 @@ import {
   changePositionCtrl,
   changeSwitchCtrl,
   deleteLightCtrl,
-} from './../../../controllers/lights/light-settings-ctrl';
+} from './../../../controllers/devices/lights/light-settings-ctrl';
 
 const changeColor = (req, res) => {
   const { id } = req.locals;
   const { color } = req.body;
-  
+
   changeColorCtrl(color, id)
     .then((log) => {
       res.send(log);

@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { retrieveAll } from './general/wifi-general';
+import { retrieveAll } from './wifis/wifi-general';
 
 const wifiRouter = express.Router();
 

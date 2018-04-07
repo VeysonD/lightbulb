@@ -1,8 +1,8 @@
 import express from 'express';
 
-import lightRouter from './lights/light-handler';
-import clockRouter from './clocks/clock-handler';
-import wifiRouter from './wifis/wifi-handler';
+import lightRouter from './routes/light-handler';
+import clockRouter from './routes/clock-handler';
+import wifiRouter from './routes/wifi-handler';
 
 const router = express.Router();
 
