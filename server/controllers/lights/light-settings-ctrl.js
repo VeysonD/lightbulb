@@ -23,8 +23,7 @@ const changeColorCtrl = (color, id) =>
         }
       })
       .catch((error) => {
-        console.error(error);
-        reject(new Error('There was an error when updating the color'));
+        reject(error);
       });
   });
 
@@ -48,8 +47,7 @@ const changeDimCtrl = (dim, id) =>
           resolve(log);
         })
         .catch((error) => {
-          console.error(error);
-          reject(new Error('There was an error when updating the dim setting'));
+          reject(error);
         });
     } else {
       reject(new Error('Please provide the amount to dim the light'));
@@ -76,8 +74,7 @@ const changeIpCtrl = (id, ip) =>
           resolve(log);
         })
         .catch((error) => {
-          console.error(error);
-          reject(new Error('There was an error when updating the ip'));
+          reject(error);
         });
     } else {
       reject(new Error('Please provide an IP'));
@@ -106,8 +103,7 @@ const changePositionCtrl = (id, latitude, longitude, location) =>
           resolve(log);
         })
         .catch((error) => {
-          console.error(error);
-          reject(new Error('There was an error when updating the position'));
+          reject(error);
         });
     } else {
       reject(new Error('Please provide the proper coordinates'));
@@ -132,8 +128,7 @@ const changeSwitchCtrl = id =>
         resolve(log);
       })
       .catch((error) => {
-        console.error(error);
-        reject(new Error('There was an error when switching the light'));
+        reject(error);
       });
   });
 
@@ -152,8 +147,7 @@ const deleteLightCtrl = id =>
         resolve(log);
       })
       .catch((error) => {
-        console.error(error);
-        reject(new Error('There was an error while removing the light'));
+        reject(error);
       });
   });
 
