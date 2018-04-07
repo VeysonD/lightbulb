@@ -4,13 +4,23 @@ const comparePass = (password, hash) =>
   new Promise((resolve, reject) => {
     bcrypt.compare(password, hash, (err, check) => {
       if (err) {
-        reject(new Error(`There was an error when checking the password: ${err}`));
+        reject(err);
       } else {
         resolve(check);
       }
     });
   });
 
-const hashPass = (password, rounds) => bcrypt.hash(password, rounds, (err, hash) => hash);
+const hashPass = (password, rounds) =>
+  new Promise((resolve, reject) => {
+    bcrypt.hash(password, rounds, (err, hash) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(hash);
+      }
+    });
+  });
+
 
 export { comparePass, hashPass };
