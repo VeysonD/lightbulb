@@ -2,28 +2,32 @@ import db from './../../../db/db-config';
 import { comparePass } from './../../utils/password-check';
 import addLog from './../../utils/logger';
 
+
 const wifiPassCtrl = (password, id) =>
   new Promise((resolve, reject) => {
-    db.light
-      .update({
-        connected_wifi: false,
-        wifi_pass: password,
-      }, {
-        where: {
-          id,
-        },
-        returning: true,
-      })
-      .then((light) => {
-        const { name } = light[1][0].dataValues;
-        const log = `${name}'s saved wifi password was changed to ${password}`;
-        addLog(log, 'lightId', id);
-        resolve();
-      })
-      .catch((error) => {
-        console.error(error);
-        reject(new Error('There was an error when updating the password'));
-      });
+    if (password) {
+      db.light
+        .update({
+          connected_wifi: false,
+          wifi_pass: password,
+        }, {
+          where: {
+            id,
+          },
+          returning: true,
+        })
+        .then((light) => {
+          const { name } = light[1][0].dataValues;
+          const log = `${name}'s saved wifi password was changed to ${password}`;
+          addLog(log, 'lightId', id);
+          resolve(log);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    } else {
+      reject(new Error('An invalid password was provided'));
+    }
   });
 
 const wifiUpdate = (wifi, password, id) =>
@@ -34,56 +38,56 @@ const wifiUpdate = (wifi, password, id) =>
         const { name } = light[0][0];
         const log = `${name} switched to ${wifi} wifi`;
         addLog(log, 'lightId', id);
-        resolve();
+        resolve(log);
       })
       .catch((error) => {
-        console.error(error);
-        reject(new Error('There was an error when updating the light wifi settings'));
+        reject(error);
       });
   });
 
 const wifiChangeCtrl = (wifi, password, id) =>
   new Promise((resolve, reject) => {
-    db.wifi
-      .findAll({
-        attributes: [
-          'ssid',
-          'password',
-        ],
-        where: {
-          ssid: wifi,
-        },
-      })
-      .then((data) => {
-        if (data.length === 0) {
-          reject(new Error('The wifi does not exist on the system'));
-        } else {
-          const wifiHash = data[0].dataValues.password;
-          comparePass(password, wifiHash)
-            .then((check) => {
-              if (check) {
-                wifiUpdate(wifi, password, id)
-                  .then(() => {
-                    resolve();
-                  })
-                  .catch((error) => {
-                    console.error(error);
-                    reject(error);
-                  });
-              } else {
-                reject(new Error('Password is invalid for the specified wifi'));
-              }
-            })
-            .catch((error) => {
-              console.error(error);
-              reject(new Error(`There was an error while checking the password ${error}`));
-            });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        reject(new Error('There was an error when updating the wifi'));
-      });
+    if (wifi && password) {
+      db.wifi
+        .findAll({
+          attributes: [
+            'ssid',
+            'password',
+          ],
+          where: {
+            ssid: wifi,
+          },
+        })
+        .then((data) => {
+          if (data.length === 0) {
+            reject(new Error('The wifi does not exist on the system'));
+          } else {
+            const wifiHash = data[0].dataValues.password;
+            comparePass(password, wifiHash)
+              .then((check) => {
+                if (check) {
+                  wifiUpdate(wifi, password, id)
+                    .then((log) => {
+                      resolve(log);
+                    })
+                    .catch((error) => {
+                      reject(error);
+                    });
+                } else {
+                  reject(new Error('Password is invalid for the specified wifi'));
+                }
+              })
+              .catch((error) => {
+                reject(error);
+              });
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    } else {
+      reject(new Error('Please provide a wifi and password'));
+    }
   });
 
 const wifiToggleOffCtrl = id =>
@@ -101,11 +105,10 @@ const wifiToggleOffCtrl = id =>
         }
         const log = `${name} was ${textLog} ${ssid} wifi`;
         addLog(log, 'lightId', id);
-        resolve();
+        resolve(log);
       })
       .catch((error) => {
-        console.error(error);
-        reject(new Error('There was an error when switchig the light connection to the wifi'));
+        reject(error);
       });
   });
 

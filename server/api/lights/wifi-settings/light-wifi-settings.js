@@ -8,47 +8,40 @@ import {
 const wifiChange = (req, res) => {
   const { id } = req.locals;
   const { wifi, password } = req.body;
-  if (wifi && password) {
-    wifiChangeCtrl(wifi, password, id)
-      .then(() => {
-        res.send(`Wifi was changed to ${wifi}`);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.send('There was an error while changing the wifi');
-      });
-  } else {
-    res.send('An invalid wifi or password was provided');
-  }
+
+  wifiChangeCtrl(wifi, password, id)
+    .then((log) => {
+      res.send(log);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send(`${error.name}: ${error.message}`);
+    });
 };
 
 const wifiPass = (req, res) => {
   const { id } = req.locals;
   const { password } = req.body;
 
-  if (password) {
-    wifiPassCtrl(password, id)
-      .then(() => {
-        res.send(`Password updated to ${password}`);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.send('There was an error while updating the password');
-      });
-  } else {
-    res.send('An invalid wifi or password was provided');
-  }
+  wifiPassCtrl(password, id)
+    .then((log) => {
+      res.send(log);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send(`${error.name}: ${error.message}`);
+    });
 };
 
 const wifiToggleOff = (req, res) => {
   const { id } = req.locals;
   wifiToggleOffCtrl(id)
-    .then(() => {
-      res.send(`Light ${id} toggled off from its wifi`);
+    .then((log) => {
+      res.send(log);
     })
     .catch((error) => {
       console.error(error);
-      res.send('There was an error when switching the light connection to the wifi');
+      res.send(`${error.name}: ${error.message}`);
     });
 };
 
