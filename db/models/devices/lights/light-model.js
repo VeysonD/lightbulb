@@ -13,8 +13,16 @@ const LightSchema = (sequelize, DataTypes) => {
         isIP: true,
       },
     },
-    latitude: { type: DataTypes.DECIMAL, allowNull: false },
-    longitude: { type: DataTypes.DECIMAL, allowNull: false },
+    latitude: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      validate: { min: -90, max: 90 },
+    },
+    longitude: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      validate: { min: -180, max: 180 },
+    },
     location: { type: DataTypes.STRING, allowNull: false },
     name: { type: DataTypes.STRING, allowNull: false },
     switched_on: { type: DataTypes.BOOLEAN, allowNull: false },
@@ -33,7 +41,7 @@ const LightSchema = (sequelize, DataTypes) => {
             const prev = instance.previous(change);
             const curr = instance.dataValues[change];
             const log = `${name}'s ${change} changed from ${prev} to ${curr}`;
-            
+
             addLog(log, 'lightId', id);
           });
         }
