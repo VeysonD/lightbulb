@@ -4,8 +4,8 @@ import addLog from './../../changelogs/changelog-ctrl';
 
 
 const createNewLight = (
-  charging, color,
-  dim, ip,
+  charging = true, color,
+  dim = 0, ip,
   latitude, longitude, location,
   name, switchedOn,
   wifi, wifiId, wifiPass,

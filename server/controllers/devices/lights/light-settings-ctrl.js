@@ -19,6 +19,7 @@ const changeColorCtrl = (color, id) =>
           reject(new Error('The light does not exist'));
         } else {
           const log = `${light[1][0].dataValues.name} changed to ${color}`;
+
           addLog(log, 'lightId', id);
           resolve(log);
         }
@@ -44,6 +45,7 @@ const changeDimCtrl = (dim, id) =>
         .then((light) => {
           const { name } = light[1][0].dataValues;
           const log = `${name}'s dim setting has been turned to ${dim}%`;
+
           addLog(log, 'lightId', id);
           resolve(log);
         })
@@ -71,6 +73,7 @@ const changeIpCtrl = (id, ip) =>
         .then((light) => {
           const { name } = light[1][0].dataValues;
           const log = `${name}'s IP was updated to ${ip}`;
+
           addLog(log, 'lightId', id);
           resolve(log);
         })
@@ -100,6 +103,7 @@ const changePositionCtrl = (id, latitude, longitude, location) =>
         .then((light) => {
           const { name } = light[1][0].dataValues;
           const log = `${name}'s position was updated to ${location}`;
+
           addLog(log, 'lightId', id);
           resolve(log);
         })
@@ -107,7 +111,7 @@ const changePositionCtrl = (id, latitude, longitude, location) =>
           reject(error);
         });
     } else {
-      reject(new Error('Please provide the proper coordinates'));
+      reject(new Error('Please provide a location'));
     }
   });
 
@@ -118,6 +122,7 @@ const changeSwitchCtrl = id =>
       .spread((light) => {
         const { name } = light[0];
         const on = light[0].switched_on;
+        
         let onText = '';
         if (on) {
           onText = 'on';
@@ -125,6 +130,7 @@ const changeSwitchCtrl = id =>
           onText = 'off';
         }
         const log = `${name} was switched ${onText}`;
+
         addLog(log, 'lightId', id);
         resolve(log);
       })
@@ -144,6 +150,7 @@ const deleteLightCtrl = id =>
       })
       .then((deletedLight) => {
         const log = `Light ${deletedLight} was deleted`;
+
         addLog(log, 'lightId', id);
         resolve(log);
       })
