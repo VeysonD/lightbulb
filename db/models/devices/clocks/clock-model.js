@@ -1,7 +1,7 @@
 import addLog from './../../../../server/controllers/changelogs/changelog-ctrl';
 
 const ClockSchema = (sequelize, DataTypes) => {
-  const Clock = sequelize.define('clock', {
+  const Clock = sequelize.define('Clock', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     name: { type: DataTypes.STRING, allowNull: false },
     switched_on: { type: DataTypes.BOOLEAN, allowNull: false },
@@ -17,12 +17,19 @@ const ClockSchema = (sequelize, DataTypes) => {
         isIP: true,
       },
     },
-    latitude: DataTypes.DECIMAL,
-    longitude: DataTypes.DECIMAL,
+    latitude: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      validate: { min: -90, max: 90 },
+    },
+    longitude: {
+      type: DataTypes.DECIMAL,
+      allowNull: false,
+      validate: { min: -180, max: 180 },
+    },
     location: { type: DataTypes.STRING, allowNull: false },
-    connected_wifi: DataTypes.BOOLEAN,
-    wifi_id: DataTypes.INTEGER,
-    wifi_pass: DataTypes.STRING,
+    connected_wifi: { type: DataTypes.BOOLEAN, defaultValue: false },
+    wifi_pass: { type: DataTypes.STRING, allowNull: false },
   }, {
     hooks: {
       beforeUpdate: (instance) => {
@@ -33,6 +40,7 @@ const ClockSchema = (sequelize, DataTypes) => {
             const prev = instance.previous(change);
             const curr = instance.dataValues[change];
             const log = `${name}'s ${change} changed from ${prev} to ${curr}`;
+            
             addLog(log, 'clockId', id);
           });
         }
@@ -40,8 +48,8 @@ const ClockSchema = (sequelize, DataTypes) => {
     },
   });
   Clock.associate = (models) => {
-    Clock.belongsTo(models.wifi);
-    Clock.hasMany(models.changelog);
+    Clock.belongsTo(models.Wifi);
+    Clock.hasMany(models.Changelog);
   };
   return Clock;
 };

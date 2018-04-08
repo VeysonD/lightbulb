@@ -1,8 +1,10 @@
 import addLog from './../../../../server/controllers/changelogs/changelog-ctrl';
 
 const LightSchema = (sequelize, DataTypes) => {
-  const Light = sequelize.define('light', {
+  const Light = sequelize.define('Light', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+    name: { type: DataTypes.STRING, allowNull: false },
+    switched_on: { type: DataTypes.BOOLEAN, allowNull: false },
     charging: { type: DataTypes.BOOLEAN, defaultValue: true },
     color: { type: DataTypes.STRING, allowNull: false },
     dim: { type: DataTypes.INTEGER, defaultValue: 0 },
@@ -24,10 +26,7 @@ const LightSchema = (sequelize, DataTypes) => {
       validate: { min: -180, max: 180 },
     },
     location: { type: DataTypes.STRING, allowNull: false },
-    name: { type: DataTypes.STRING, allowNull: false },
-    switched_on: { type: DataTypes.BOOLEAN, allowNull: false },
     connected_wifi: { type: DataTypes.BOOLEAN, defaultValue: false },
-    wifi_id: { type: DataTypes.INTEGER, allowNull: false },
     wifi_pass: { type: DataTypes.STRING, allowNull: false },
   }, {
     hooks: {
@@ -50,8 +49,8 @@ const LightSchema = (sequelize, DataTypes) => {
   });
 
   Light.associate = (models) => {
-    Light.belongsTo(models.wifi);
-    Light.hasMany(models.changelog);
+    Light.belongsTo(models.Wifi);
+    Light.hasMany(models.Changelog);
   };
   return Light;
 };
