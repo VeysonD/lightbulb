@@ -34,7 +34,7 @@ const wifiPassCtrl = (password, id) =>
 const wifiUpdate = (wifi, password, id) =>
   new Promise((resolve, reject) => {
     db.sequelize
-      .query(`UPDATE lights SET wifiId=(SELECT id FROM wifis WHERE ssid='${wifi}'), wifi_pass='${password}' WHERE id=${id} RETURNING name`)
+      .query(`UPDATE lights SET "wifiId"=(SELECT id FROM wifis WHERE ssid='${wifi}'), wifi_pass='${password}' WHERE id=${id} RETURNING name`)
       .then((light) => {
         const { name } = light[0][0];
         const log = `${name} switched to ${wifi} wifi`;
@@ -91,7 +91,7 @@ const wifiChangeCtrl = (wifi, password, id) =>
       reject(new Error('Please provide a wifi and password'));
     }
   });
-// lights.wifi_id=wifis.id
+
 const wifiToggleOffCtrl = id =>
   new Promise((resolve, reject) => {
     db.sequelize

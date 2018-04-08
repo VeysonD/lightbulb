@@ -24,7 +24,7 @@ const createNewLight = (
         name,
         switched_on: switchedOn,
         connected_wifi: connectedWifi,
-        wifi_id: wifiId,
+        wifiId,
         wifi_pass: wifiPass,
       })
       .then((light) => {
