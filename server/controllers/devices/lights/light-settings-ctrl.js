@@ -25,6 +25,7 @@ const changeColorCtrl = (color, id) =>
         }
       })
       .catch((error) => {
+        console.log(error);
         reject(error);
       });
   });
@@ -122,7 +123,7 @@ const changeSwitchCtrl = id =>
       .spread((light) => {
         const { name } = light[0];
         const on = light[0].switched_on;
-        
+
         let onText = '';
         if (on) {
           onText = 'on';

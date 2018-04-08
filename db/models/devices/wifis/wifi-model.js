@@ -1,5 +1,5 @@
 const WifiSchema = (sequelize, DataTypes) => {
-  const Wifi = sequelize.define('Wifi', {
+  const Wifi = sequelize.define('wifi', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     ssid: { type: DataTypes.STRING, allowNull: false },
     password: DataTypes.STRING,
@@ -39,9 +39,9 @@ const WifiSchema = (sequelize, DataTypes) => {
   });
 
   Wifi.associate = (models) => {
-    Wifi.hasMany(models.Light);
-    Wifi.hasMany(models.Clock);
-    Wifi.hasMany(models.Changelog);
+    Wifi.hasMany(models.light);
+    Wifi.hasMany(models.clock);
+    Wifi.hasMany(models.changelog);
   };
   return Wifi;
 };

@@ -1,7 +1,7 @@
 import addLog from './../../../../server/controllers/changelogs/changelog-ctrl';
 
 const LightSchema = (sequelize, DataTypes) => {
-  const Light = sequelize.define('Light', {
+  const Light = sequelize.define('light', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     name: { type: DataTypes.STRING, allowNull: false },
     switched_on: { type: DataTypes.BOOLEAN, allowNull: false },
@@ -49,8 +49,8 @@ const LightSchema = (sequelize, DataTypes) => {
   });
 
   Light.associate = (models) => {
-    Light.belongsTo(models.Wifi);
-    Light.hasMany(models.Changelog);
+    Light.belongsTo(models.wifi, { constraints: false });
+    Light.hasMany(models.changelog);
   };
   return Light;
 };

@@ -11,7 +11,7 @@ bcrypt.hash('abc123', 10, (err, hash) => {
   wifiPass = hash;
 });
 
-const addLight = () => db.Light.create({
+const addLight = () => db.light.create({
   charging: false,
   color: 'white',
   dim: 0,
@@ -22,11 +22,11 @@ const addLight = () => db.Light.create({
   name: 'Reading light',
   switched_on: true,
   connected_wifi: true,
-  WifiId: 1,
+  wifiId: 1,
   wifi_pass: 'abc123',
 });
 
-const addClock = () => db.Clock.create({
+const addClock = () => db.clock.create({
   name: 'Living room clock',
   switched_on: true,
   daylights_saving: false,
@@ -39,11 +39,11 @@ const addClock = () => db.Clock.create({
   longitude: -120.417477,
   location: '(30.764357751686, -120.41747701285)',
   connected_wifi: true,
-  WifiId: 1,
+  wifiId: 1,
   wifi_pass: 'abc123',
 });
 
-const addWifi = () => db.Wifi.create({
+const addWifi = () => db.wifi.create({
   ssid: 'McWifi',
   password: wifiPass,
   protocol: '802.11n',
@@ -62,38 +62,38 @@ const addWifi = () => db.Wifi.create({
   physical_address: 'AA-AA-AA-AA-AA-AA',
 });
 
-const addChangelogs = () => db.Changelog.bulkCreate([
+const addChangelogs = () => db.changelog.bulkCreate([
   {
     log: 'Reading light was turned on',
-    LightId: 1,
+    lightId: 1,
   },
   {
     log: 'Reading light was moved to (37.764357751686, -122.41747701285)',
-    LightId: 1,
+    lightId: 1,
   },
   {
     log: 'Reading light switched Wi-Fi to McWifi',
-    LightId: 1,
+    lightId: 1,
   },
   {
     log: 'Living room clock was turned on',
-    ClockId: 1,
+    clockId: 1,
   },
   {
     log: 'Living room clock was moved to (30.764357751686, -120.41747701285)',
-    ClockId: 1,
+    clockId: 1,
   },
   {
     log: 'Living room clock switched Wi-Fi to McWifi',
-    ClockId: 1,
+    clockId: 1,
   },
   {
     log: 'McWifi was turned on',
-    WifiId: 1,
+    wifiId: 1,
   },
   {
     log: 'McWifi was moved to (30.77000000, -120.42000000)',
-    WifiId: 1,
+    wifiId: 1,
   },
 ]);
 

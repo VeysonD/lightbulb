@@ -46,7 +46,7 @@ const connectionUpdate = (id, lightName, wifiId, wifiPass) =>
 const handleAuthCtrl = (id, password) =>
   new Promise((resolve, reject) => {
     db.sequelize
-      .query(`SELECT connected_wifi, name, wifi_id, wifi_pass FROM lights WHERE id = ${id}`)
+      .query(`SELECT connected_wifi, name, "wifiId", wifi_pass FROM lights WHERE id = ${id}`)
       .then((connectionStatus) => {
         const connect = connectionStatus[0];
 
@@ -55,7 +55,7 @@ const handleAuthCtrl = (id, password) =>
         } else {
           const connectedWifi = connect[0].connected_wifi;
           const lightName = connect[0].name;
-          const wifiId = connect[0].wifi_id;
+          const { wifiId } = connect[0];
           const wifiPass = password || connect[0].wifi_pass;
 
           if (connectedWifi) {

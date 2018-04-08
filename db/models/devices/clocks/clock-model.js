@@ -1,7 +1,7 @@
 import addLog from './../../../../server/controllers/changelogs/changelog-ctrl';
 
 const ClockSchema = (sequelize, DataTypes) => {
-  const Clock = sequelize.define('Clock', {
+  const Clock = sequelize.define('clock', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     name: { type: DataTypes.STRING, allowNull: false },
     switched_on: { type: DataTypes.BOOLEAN, allowNull: false },
@@ -40,7 +40,7 @@ const ClockSchema = (sequelize, DataTypes) => {
             const prev = instance.previous(change);
             const curr = instance.dataValues[change];
             const log = `${name}'s ${change} changed from ${prev} to ${curr}`;
-            
+
             addLog(log, 'clockId', id);
           });
         }
@@ -48,8 +48,8 @@ const ClockSchema = (sequelize, DataTypes) => {
     },
   });
   Clock.associate = (models) => {
-    Clock.belongsTo(models.Wifi);
-    Clock.hasMany(models.Changelog);
+    Clock.belongsTo(models.wifi, { constraints: false });
+    Clock.hasMany(models.changelog);
   };
   return Clock;
 };
