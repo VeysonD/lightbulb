@@ -1,23 +1,29 @@
 import Sequelize from 'sequelize';
 import readModels from './utils/read-models';
 
+let sequelize = '';
+
 const {
-  DB_NAME, DB_PASSWORD, DB_URL, DB_USERNAME,
+  DATABASE_URL, DB_NAME, DB_PASSWORD, DB_URL, DB_USERNAME,
 } = process.env;
 
-const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
-  host: DB_URL,
-  dialect: 'postgres',
-  dialectOptions: {
+if (DATABASE_URL) {
+  sequelize = new Sequelize(DATABASE_URL);
+} else {
+  sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+    host: DB_URL,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: true,
+    },
     ssl: true,
-  },
-  ssl: true,
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000,
-  },
-});
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000,
+    },
+  });
+}
 
 
 const db = {};
