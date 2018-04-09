@@ -1,9 +1,5 @@
 import Sequelize from 'sequelize';
-import pg from 'pg';
-
 import readModels from './utils/read-models';
-
-pg.defaults.ssl = true;
 
 const {
   DB_NAME, DB_PASSWORD, DB_URL, DB_USERNAME,
@@ -12,6 +8,10 @@ const {
 const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
   host: DB_URL,
   dialect: 'postgres',
+  dialectOptions: {
+    ssl: true,
+  },
+  ssl: true,
   pool: {
     max: 5,
     min: 0,
