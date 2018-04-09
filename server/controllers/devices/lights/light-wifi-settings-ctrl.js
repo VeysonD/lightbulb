@@ -122,11 +122,12 @@ const wifiChangeCtrl = (wifi, password, id) =>
 const wifiToggleOffCtrl = id =>
   new Promise((resolve, reject) => {
     db.sequelize
-      .query(`UPDATE lights SET connected_wifi = NOT connected_wifi WHERE id = ${id} RETURNING name, connected_wifi, (SELECT ssid FROM wifis INNER JOIN lights ON lights."wifiId"=wifis.id)`)
+      .query(`UPDATE lights SET connected_wifi = NOT connected_wifi WHERE id = ${id} RETURNING name, connected_wifi, (SELECT ssid FROM wifis INNER JOIN lights ON lights."wifiId"=wifis.id WHERE lights.id=${id})`)
       .spread((light) => {
         const { name, ssid } = light[0];
         const connectedWifi = light[0].connected_wifi;
         let textLog = '';
+        
         if (connectedWifi) {
           textLog = 'connected to';
         } else {
