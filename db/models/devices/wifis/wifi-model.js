@@ -3,7 +3,7 @@ import { hashPass } from './../../../utils/password-hash';
 const WifiSchema = (sequelize, DataTypes) => {
   const Wifi = sequelize.define('wifi', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    ssid: { type: DataTypes.STRING, allowNull: false },
+    ssid: { type: DataTypes.STRING, allowNull: false, unique: true },
     password: DataTypes.STRING,
     switched_on: DataTypes.BOOLEAN,
     protocol: { type: DataTypes.STRING, allowNull: false },
@@ -40,12 +40,12 @@ const WifiSchema = (sequelize, DataTypes) => {
     physical_address: { type: DataTypes.STRING, allowNull: false },
   }, {
     hooks: {
-      beforeCreate: (instance) => {
-        const { password } = instance.dataValues;
-        hashPass(password, 10)
+      beforeCreate: (wifi) => {
+        const { password } = wifi.dataValues;
+        
+        return hashPass(password, 10)
           .then((hash) => {
-            console.log('hash: ', hash);
-            console.log('instance: ', instance);
+            wifi.set('password', hash);
           })
           .catch((error) => {
             console.error(error);

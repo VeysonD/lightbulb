@@ -1,13 +1,14 @@
 import db from './../../../../db/db-config';
+import addLog from './../../changelogs/changelog-ctrl';
 
 const addWifiCtrl = (
-  ssid, password, switchedOn,
+  ssid, password, switchedOn = false,
   protocol, securityType,
   networkBand, networkChannel,
-  ip4, ip4Dns,
+  ip4, ip4Dns = null,
   latitude, longitude, location,
-  manufacturer, description,
-  driverVersion, physicalAddress,
+  manufacturer = null, description = null,
+  driverVersion = null, physicalAddress,
 ) =>
   new Promise((resolve, reject) => {
     db.wifi
@@ -32,10 +33,11 @@ const addWifiCtrl = (
         returning: true,
       })
       .then((wifi) => {
+        const wifiId = wifi.dataValues.id;
         const log = `${ssid} was added to the network`;
-        console.log('What does the wifi look like: ', wifi);
+
+        addLog(log, 'wifiId', wifiId);
         resolve(wifi);
-        // addLog(log, 'wifiId', );
       })
       .catch((error) => {
         reject(error);
@@ -59,8 +61,11 @@ const retrieveOneCtrl = id =>
     db.sequelize
       .query(`SELECT * FROM wifis WHERE id=${id}`)
       .then((wifi) => {
-        console.log('What does retrieve one wifi look like: ', wifi);
-        resolve(wifi);
+        if (wifi[0].length === 0) {
+          reject(new Error('That wifi does not exist'));
+        } else {
+          resolve(wifi[0]);
+        }
       })
       .catch((error) => {
         reject(error);
