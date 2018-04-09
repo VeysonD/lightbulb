@@ -2,26 +2,53 @@ import db from './../../../../db/db-config';
 import { comparePass } from './../../../utils/password-check';
 import addLog from './../../changelogs/changelog-ctrl';
 
+const checkWifiConnection = (password, id) =>
+  new Promise((resolve, reject) => {
+    db.sequelize
+      .query(`SELECT password FROM wifis INNER JOIN lights ON lights."wifiId"=wifis.id WHERE lights.id=${id}`)
+      .then((results) => {
+        const wifiHash = results[0][0].password;
+
+        comparePass(password, wifiHash)
+          .then((check) => {
+            resolve(check);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+        reject(error);
+      });
+  });
 
 const wifiPassCtrl = (password, id) =>
   new Promise((resolve, reject) => {
     if (password) {
-      db.light
-        .update({
-          connected_wifi: false,
-          wifi_pass: password,
-        }, {
-          where: {
-            id,
-          },
-          returning: true,
-        })
-        .then((light) => {
-          const { name } = light[1][0].dataValues;
-          const log = `${name}'s saved wifi password was changed to ${password}`;
+      checkWifiConnection(password, id)
+        .then((result) => {
+          const connected = result;
+          db.light
+            .update({
+              connected_wifi: connected,
+              wifi_pass: password,
+            }, {
+              where: {
+                id,
+              },
+              returning: true,
+            })
+            .then((light) => {
+              const { name } = light[1][0].dataValues;
+              const log = `${name}'s saved wifi password was changed to ${password}`;
 
-          addLog(log, 'lightId', id);
-          resolve(log);
+              addLog(log, 'lightId', id);
+              resolve(log);
+            })
+            .catch((error) => {
+              reject(error);
+            });
         })
         .catch((error) => {
           reject(error);
