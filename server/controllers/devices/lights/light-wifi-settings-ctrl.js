@@ -61,13 +61,14 @@ const wifiPassCtrl = (password, id) =>
 const wifiUpdate = (wifi, password, id) =>
   new Promise((resolve, reject) => {
     db.sequelize
-      .query(`UPDATE lights SET "wifiId"=(SELECT id FROM wifis WHERE ssid='${wifi}'), wifi_pass='${password}' WHERE id=${id} RETURNING name`)
+      .query(`UPDATE lights SET "wifiId"=(SELECT id FROM wifis WHERE ssid='${wifi}'), wifi_pass='${password}' WHERE id=${id} RETURNING name, (SELECT id FROM wifis INNER JOIN lights ON lights."wifiId"=wifis.id WHERE lights.id=${id})`)
       .then((light) => {
         const { name } = light[0][0];
+        const { wifiId } = light[0][0].id;
         const log = `${name} switched to ${wifi} wifi`;
 
         addLog(log, 'lightId', id);
-        addLog(log, 'wifiId', id);
+        addLog(log, 'wifiId', wifiId);
         resolve(log);
       })
       .catch((error) => {

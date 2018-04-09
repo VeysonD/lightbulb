@@ -1,24 +1,57 @@
-import db from './../../../../db/db-config';
+import { addWifiCtrl, retrieveAllCtrl, retrieveOneCtrl } from './../../../controllers/devices/wifis/wifi-general-ctrl';
+
+const addWifi = (req, res) => {
+  const {
+    ssid, password, switchedOn,
+    protocol, securityType,
+    networkBand, networkChannel,
+    ip4, ip4Dns,
+    latitude, longitude, location,
+    manufacturer, description,
+    driverVersion, physicalAddress,
+  } = req.body;
+
+  addWifiCtrl(
+    ssid, password, switchedOn,
+    protocol, securityType,
+    networkBand, networkChannel,
+    ip4, ip4Dns,
+    latitude, longitude, location,
+    manufacturer, description,
+    driverVersion, physicalAddress,
+  )
+    .then((wifi) => {
+      console.log('What is the wifi being sent in the response: ', wifi);
+      res.send(wifi);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send(error);
+    });
+};
 
 const retrieveAll = (req, res) => {
-  db.wifi
-    .findAll()
+  retrieveAllCtrl()
     .then((wifis) => {
       res.send(wifis);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.send(error);
     });
 };
 
 const retrieveOne = (req, res) => {
   const { id } = req.params;
-  db.sequelize
-    .query(`SELECT * FROM wifis WHERE id=${id}`)
+
+  retrieveOneCtrl(id)
     .then((wifi) => {
-      res.send(wifi[0]);
+      res.send(wifi);
     })
     .catch((error) => {
       console.error(error);
-      res.send('There was an error with your wifi request');
+      res.send(error);
     });
 };
 
-export { retrieveAll, retrieveOne };
+export { addWifi, retrieveAll, retrieveOne };
