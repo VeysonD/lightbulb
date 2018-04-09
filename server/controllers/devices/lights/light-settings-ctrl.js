@@ -15,14 +15,10 @@ const changeColorCtrl = (color, id) =>
         individualHooks: true,
       })
       .then((light) => {
-        if (light[1].length === 0) {
-          reject(new Error('The light does not exist'));
-        } else {
-          const log = `${light[1][0].dataValues.name} changed to ${color}`;
+        const { name } = light[1][0].dataValues;
+        const log = `${name} changed to ${color}`;
 
-          addLog(log, 'lightId', id);
-          resolve(log);
-        }
+        resolve(log);
       })
       .catch((error) => {
         console.log(error);
@@ -47,7 +43,6 @@ const changeDimCtrl = (dim, id) =>
           const { name } = light[1][0].dataValues;
           const log = `${name}'s dim setting has been turned to ${dim}%`;
 
-          addLog(log, 'lightId', id);
           resolve(log);
         })
         .catch((error) => {
@@ -63,7 +58,7 @@ const changeIpCtrl = (id, ip) =>
     if (ip) {
       db.light
         .update({
-          id,
+          ip,
         }, {
           where: {
             id,
@@ -75,7 +70,6 @@ const changeIpCtrl = (id, ip) =>
           const { name } = light[1][0].dataValues;
           const log = `${name}'s IP was updated to ${ip}`;
 
-          addLog(log, 'lightId', id);
           resolve(log);
         })
         .catch((error) => {
@@ -103,16 +97,15 @@ const changePositionCtrl = (id, latitude, longitude, location) =>
         })
         .then((light) => {
           const { name } = light[1][0].dataValues;
-          const log = `${name}'s position was updated to ${location}`;
+          const log = `${name}'s position was updated to ${location} with coordinates of (${latitude}, ${longitude})`;
 
-          addLog(log, 'lightId', id);
           resolve(log);
         })
         .catch((error) => {
           reject(error);
         });
     } else {
-      reject(new Error('Please provide a location'));
+      reject(new Error('Please provide location, latitude, and longtide'));
     }
   });
 
@@ -123,8 +116,8 @@ const changeSwitchCtrl = id =>
       .spread((light) => {
         const { name } = light[0];
         const on = light[0].switched_on;
-
         let onText = '';
+
         if (on) {
           onText = 'on';
         } else {
@@ -136,6 +129,7 @@ const changeSwitchCtrl = id =>
         resolve(log);
       })
       .catch((error) => {
+        console.log('What is the error', error);
         reject(error);
       });
   });
@@ -148,11 +142,11 @@ const deleteLightCtrl = id =>
           id,
         },
         returning: true,
+        individualHooks: true,
       })
-      .then((deletedLight) => {
-        const log = `Light ${deletedLight} was deleted`;
+      .then(() => {
+        const log = `Light ${id} was deleted`;
 
-        addLog(log, 'lightId', id);
         resolve(log);
       })
       .catch((error) => {

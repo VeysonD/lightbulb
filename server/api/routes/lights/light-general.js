@@ -37,7 +37,7 @@ const newLight = (req, res) => {
 };
 
 const retrieveAll = (req, res) => {
-  retrieveAllCtrl
+  retrieveAllCtrl()
     .then((lights) => {
       res.send(lights);
     })

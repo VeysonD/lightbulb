@@ -27,10 +27,10 @@ const createNewLight = (
         wifiId,
         wifi_pass: wifiPass,
       })
-      .then((light) => {
-        const { id } = light.dataValues;
-        const log = `${color} light was added to ${wifi} network`;
-        addLog(log, 'lightId', id);
+      .then(() => {
+        const log = `${name} was added to ${wifi}'s light network`;
+
+        addLog(log, 'wifiId', wifiId);
         resolve(log);
       })
       .catch((error) => {
@@ -134,7 +134,11 @@ const retrieveOneCtrl = id =>
     db.sequelize
       .query(`SELECT * FROM lights WHERE id = ${id}`)
       .then((light) => {
-        resolve(light[0]);
+        if (light[0].length === 0) {
+          reject(new Error('This light is not associated with any wifi'));
+        } else {
+          resolve(light[0]);
+        }
       })
       .catch((error) => {
         reject(error);

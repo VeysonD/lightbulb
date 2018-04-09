@@ -45,6 +45,12 @@ const LightSchema = (sequelize, DataTypes) => {
           });
         }
       },
+      beforeDestroy: (instance) => {
+        const { name, wifiId } = instance.dataValues;
+        const log = `${name} was deleted from wifi ${wifiId}`;
+
+        addLog(log, 'wifiId', wifiId);
+      },
     },
   });
 
