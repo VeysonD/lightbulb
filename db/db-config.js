@@ -1,5 +1,9 @@
 import Sequelize from 'sequelize';
+import pg from 'pg';
+
 import readModels from './utils/read-models';
+
+pg.defaults.ssl = true;
 
 const {
   DB_NAME, DB_PASSWORD, DB_URL, DB_USERNAME,
