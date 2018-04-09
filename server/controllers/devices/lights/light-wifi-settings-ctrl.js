@@ -67,6 +67,7 @@ const wifiUpdate = (wifi, password, id) =>
         const log = `${name} switched to ${wifi} wifi`;
 
         addLog(log, 'lightId', id);
+        addLog(log, 'wifiId', id);
         resolve(log);
       })
       .catch((error) => {
@@ -127,7 +128,7 @@ const wifiToggleOffCtrl = id =>
         const { name, ssid } = light[0];
         const connectedWifi = light[0].connected_wifi;
         let textLog = '';
-        
+
         if (connectedWifi) {
           textLog = 'connected to';
         } else {
