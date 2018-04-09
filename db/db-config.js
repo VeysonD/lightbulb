@@ -1,21 +1,19 @@
 import Sequelize from 'sequelize';
 import readModels from './utils/read-models';
 
-let sequelize;
+const {
+  DB_NAME, DB_PASSWORD, DB_URL, DB_USERNAME,
+} = process.env;
 
-if (process.env.PROD) {
-  sequelize = new Sequelize(process.env.DB_URL);
-} else {
-  sequelize = new Sequelize('mydevices', process.env.DB_USERNAME, process.env.DB_PASSWORD, {
-    host: process.env.DB_URL,
-    dialect: 'postgres',
-    pool: {
-      max: 5,
-      min: 0,
-      idle: 10000,
-    },
-  });
-}
+const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+  host: DB_URL,
+  dialect: 'postgres',
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000,
+  },
+});
 
 
 const db = {};
