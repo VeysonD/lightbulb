@@ -61,11 +61,13 @@ const wifiPassCtrl = (password, id) =>
 const wifiUpdate = (wifi, password, id) =>
   new Promise((resolve, reject) => {
     db.sequelize
-      .query(`UPDATE lights SET "wifiId"=(SELECT id FROM wifis WHERE ssid='${wifi}'), wifi_pass='${password}' WHERE id=${id} RETURNING name, (SELECT id FROM wifis INNER JOIN lights ON lights."wifiId"=wifis.id WHERE lights.id=${id})`)
+      .query(`UPDATE lights SET "wifiId"=(SELECT id FROM wifis WHERE ssid='${wifi}'), wifi_pass='${password}' WHERE id=${id} RETURNING name, (SELECT id FROM wifis WHERE ssid='${wifi}')`)
       .then((light) => {
         const { name } = light[0][0];
-        const { wifiId } = light[0][0].id;
+        const wifiId = light[0][0].id;
         const log = `${name} switched to ${wifi} wifi`;
+
+        console.log('What is the wifiId before entering into log: ', wifiId, id);
 
         addLog(log, 'lightId', id);
         addLog(log, 'wifiId', wifiId);
@@ -94,6 +96,7 @@ const wifiChangeCtrl = (wifi, password, id) =>
             reject(new Error('The wifi does not exist on the system'));
           } else {
             const wifiHash = data[0].dataValues.password;
+            console.log('What does the WifiHash look like: ', wifiHash);
             comparePass(password, wifiHash)
               .then((check) => {
                 if (check) {

@@ -4,7 +4,7 @@ const WifiSchema = (sequelize, DataTypes) => {
   const Wifi = sequelize.define('wifi', {
     id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     ssid: { type: DataTypes.STRING, allowNull: false, unique: true },
-    password: DataTypes.STRING,
+    password: { type: DataTypes.STRING, allowNull: false },
     switched_on: DataTypes.BOOLEAN,
     protocol: { type: DataTypes.STRING, allowNull: false },
     security_type: { type: DataTypes.STRING, allowNull: false },
@@ -42,7 +42,7 @@ const WifiSchema = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (wifi) => {
         const { password } = wifi.dataValues;
-        
+
         return hashPass(password, 10)
           .then((hash) => {
             wifi.set('password', hash);

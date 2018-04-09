@@ -21,7 +21,6 @@ const addWifi = (req, res) => {
     driverVersion, physicalAddress,
   )
     .then((wifi) => {
-      console.log('What is the wifi being sent in the response: ', wifi);
       res.send(wifi);
     })
     .catch((error) => {

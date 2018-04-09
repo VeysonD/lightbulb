@@ -3,13 +3,6 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const db = require('./db-config').default;
-const bcrypt = require('bcrypt');
-
-let wifiPass = '';
-
-bcrypt.hash('abc123', 10, (err, hash) => {
-  wifiPass = hash;
-});
 
 const addLight = () => db.light.create({
   charging: false,
@@ -45,7 +38,7 @@ const addClock = () => db.clock.create({
 
 const addWifi = () => db.wifi.create({
   ssid: 'McWifi',
-  password: wifiPass,
+  password: 'abc123',
   protocol: '802.11n',
   switched_on: true,
   security_type: 'WPA2-Personal',
