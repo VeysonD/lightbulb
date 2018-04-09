@@ -110,7 +110,7 @@ class App extends Component {
             {loaded
               ?
               lights.map((light) => {
-                const lightWifi = wifis.filter(wifi => wifi.id === light.wifi_id)[0];
+                const lightWifi = wifis.filter(wifi => wifi.id === light.wifiId)[0];
                 return (
                   <Light
                     name={light.name}

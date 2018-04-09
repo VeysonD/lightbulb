@@ -40,7 +40,6 @@ export default class Light extends Component {
     fetch(`/api/lights/${id}/switch`, {
       method: 'POST',
     })
-      .then(res => res.json())
       .then(() => {
         this.props.fetchHandler();
       }, (error) => {
