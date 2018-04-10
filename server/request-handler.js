@@ -17,5 +17,9 @@ app.get('/', (req, res) => {
 
 app.use('/api', router);
 
+app.use((req, res) => {
+  res.status(404).send('Sorry can\'t find that!');
+});
+
 
 export default app;
