@@ -34,6 +34,7 @@ const createNewLight = (
         resolve(log);
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });
@@ -58,7 +59,9 @@ const newLightCtrl = (
       })
       .then((data) => {
         if (data.length === 0) {
-          reject(new Error('There is no wifi by that name'));
+          const error = new Error('There is no wifi by that name');
+          error.code = 404;
+          reject(error);
         } else {
           const wifiHash = data[0].dataValues.password;
           const wifiId = data[0].dataValues.id;
@@ -80,15 +83,19 @@ const newLightCtrl = (
                     reject(error);
                   });
               } else {
-                reject(new Error('The wifi password provided is incorrect'));
+                const error = new Error('The wifi password provided is incorrect');
+                error.code = 400;
+                reject(error);
               }
             })
             .catch((error) => {
+              error.code = 400;
               reject(error);
             });
         }
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });
@@ -101,6 +108,7 @@ const retrieveAllCtrl = () =>
         resolve(lights);
       })
       .catch((error) => {
+        error.code = 500;
         reject(error);
       });
   });
@@ -115,7 +123,9 @@ const retrieveLogsCtrl = id =>
       })
       .then((data) => {
         if (data.length === 0) {
-          reject(new Error('There are no logs for this device'));
+          const error = new Error('There are no logs for this device');
+          error.code = 404;
+          reject(error);
         } else {
           const logs = data.map((log) => {
             const logData = log.dataValues;
@@ -125,6 +135,7 @@ const retrieveLogsCtrl = id =>
         }
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });
@@ -135,12 +146,15 @@ const retrieveOneCtrl = id =>
       .query(`SELECT * FROM lights WHERE id = ${id}`)
       .then((light) => {
         if (light[0].length === 0) {
-          reject(new Error('This light is not associated with any wifi'));
+          const error = new Error('This light is not associated with any wifi');
+          error.code = 404;
+          reject(error);
         } else {
           resolve(light[0]);
         }
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });

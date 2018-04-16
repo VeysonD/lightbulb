@@ -21,7 +21,7 @@ const changeColorCtrl = (color, id) =>
         resolve(log);
       })
       .catch((error) => {
-        console.log(error);
+        error.code = 400;
         reject(error);
       });
   });
@@ -46,10 +46,13 @@ const changeDimCtrl = (dim, id) =>
           resolve(log);
         })
         .catch((error) => {
+          error.code = 400;
           reject(error);
         });
     } else {
-      reject(new Error('Please provide the amount to dim the light'));
+      const error = new Error('Please provide the amount to dim the light');
+      error.code = 400;
+      reject(error);
     }
   });
 
@@ -73,10 +76,13 @@ const changeIpCtrl = (id, ip) =>
           resolve(log);
         })
         .catch((error) => {
+          error.code = 400;
           reject(error);
         });
     } else {
-      reject(new Error('Please provide an IP'));
+      const error = new Error('Please provide an IP');
+      error.code = 400;
+      reject(error);
     }
   });
 
@@ -102,10 +108,13 @@ const changePositionCtrl = (id, latitude, longitude, location) =>
           resolve(log);
         })
         .catch((error) => {
+          error.code = 400;
           reject(error);
         });
     } else {
-      reject(new Error('Please provide location, latitude, and longtide'));
+      const error = new Error('Please provide location, latitude, and longtide');
+      error.code = 400;
+      reject(error);
     }
   });
 
@@ -129,7 +138,7 @@ const changeSwitchCtrl = id =>
         resolve(log);
       })
       .catch((error) => {
-        console.log('What is the error', error);
+        error.code = 400;
         reject(error);
       });
   });
@@ -150,6 +159,7 @@ const deleteLightCtrl = id =>
         resolve(log);
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });

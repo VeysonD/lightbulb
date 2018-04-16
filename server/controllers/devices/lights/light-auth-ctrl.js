@@ -28,17 +28,22 @@ const connectionUpdate = (id, lightName, wifiId, wifiPass) =>
                   resolve(log);
                 })
                 .catch((error) => {
+                  error.code = 400;
                   reject(error);
                 });
             } else {
-              reject(new Error('Light password for wifi is incorrect'));
+              const error = new Error('Light password for wifi is incorrect');
+              error.code = 400;
+              reject(error);
             }
           })
           .catch((error) => {
+            error.code = 400;
             reject(error);
           });
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });
@@ -51,7 +56,9 @@ const handleAuthCtrl = (id, password) =>
         const connect = connectionStatus[0];
 
         if (connect.length === 0) {
-          reject(new Error('This light is not associated with any wifi'));
+          const error = new Error('This light is not associated with any wifi');
+          error.code = 404;
+          reject(error);
         } else {
           const connectedWifi = connect[0].connected_wifi;
           const lightName = connect[0].name;
@@ -61,7 +68,9 @@ const handleAuthCtrl = (id, password) =>
           if (connectedWifi) {
             resolve('Light is connected');
           } else if (!wifiId) {
-            reject(new Error('This light is not associated with any wifi'));
+            const error = new Error('This light is not associated with any wifi');
+            error.code = 404;
+            reject(error);
           } else {
             connectionUpdate(id, lightName, wifiId, wifiPass)
               .then((log) => {
@@ -74,6 +83,7 @@ const handleAuthCtrl = (id, password) =>
         }
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });

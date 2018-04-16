@@ -14,11 +14,12 @@ const checkWifiConnection = (password, id) =>
             resolve(check);
           })
           .catch((error) => {
+            error.code = 400;
             reject(error);
           });
       })
       .catch((error) => {
-        console.error(error);
+        error.code = 400;
         reject(error);
       });
   });
@@ -47,14 +48,18 @@ const wifiPassCtrl = (password, id) =>
               resolve(log);
             })
             .catch((error) => {
+              error.code = 400;
               reject(error);
             });
         })
         .catch((error) => {
+          error.code = 400;
           reject(error);
         });
     } else {
-      reject(new Error('An invalid password was provided'));
+      const error = new Error('An invalid password was provided');
+      error.code = 400;
+      reject(error);
     }
   });
 
@@ -67,13 +72,12 @@ const wifiUpdate = (wifi, password, id) =>
         const wifiId = light[0][0].id;
         const log = `${name} switched to ${wifi} wifi`;
 
-        console.log('What is the wifiId before entering into log: ', wifiId, id);
-
         addLog(log, 'lightId', id);
         addLog(log, 'wifiId', wifiId);
         resolve(log);
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });
@@ -93,7 +97,9 @@ const wifiChangeCtrl = (wifi, password, id) =>
         })
         .then((data) => {
           if (data.length === 0) {
-            reject(new Error('The wifi does not exist on the system'));
+            const error = new Error('The wifi does not exist on the system');
+            error.code = 404;
+            reject(error);
           } else {
             const wifiHash = data[0].dataValues.password;
             console.log('What does the WifiHash look like: ', wifiHash);
@@ -108,19 +114,25 @@ const wifiChangeCtrl = (wifi, password, id) =>
                       reject(error);
                     });
                 } else {
-                  reject(new Error('Password is invalid for the specified wifi'));
+                  const error = new Error('Password is invalid for the specified wifi');
+                  error.code = 400;
+                  reject(error);
                 }
               })
               .catch((error) => {
+                error.code = 400;
                 reject(error);
               });
           }
         })
         .catch((error) => {
+          error.code = 400;
           reject(error);
         });
     } else {
-      reject(new Error('Please provide a wifi and password'));
+      const error = new Error('Please provide a wifi and password');
+      error.code = 400;
+      reject(error);
     }
   });
 
@@ -144,6 +156,7 @@ const wifiToggleOffCtrl = id =>
         resolve(log);
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });

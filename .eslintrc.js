@@ -7,6 +7,7 @@ module.exports = {
   },
   "rules": {
     "no-console": "off",
+    "no-param-reassign": "off",
     "no-trailing-spaces": "off",
   },
 }

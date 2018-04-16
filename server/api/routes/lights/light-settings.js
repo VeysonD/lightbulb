@@ -18,7 +18,7 @@ const changeColor = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -32,7 +32,7 @@ const changeDim = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -46,7 +46,7 @@ const changeIp = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -60,7 +60,7 @@ const changePosition = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -73,7 +73,7 @@ const changeSwitch = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -82,11 +82,11 @@ const deleteLight = (req, res) => {
 
   deleteLightCtrl(id)
     .then((log) => {
-      res.send(log);
+      res.status(204).send(log);
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 

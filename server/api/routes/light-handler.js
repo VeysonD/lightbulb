@@ -29,17 +29,17 @@ lightRouter.get('/:id', retrieveOne);
 lightRouter.get('/:id/logs', retrieveLogs);
 
 lightRouter.post('/new', newLight);
-lightRouter.post('/:id/*', handleAuth);
+lightRouter.put('/:id/*', handleAuth);
 
-lightRouter.post('/:id/color', changeColor);
-lightRouter.post('/:id/dim', changeDim);
-lightRouter.post('/:id/position', changePosition);
-lightRouter.post('/:id/switch', changeSwitch);
-lightRouter.post('/:id/ip', changeIp);
+lightRouter.put('/:id/color', changeColor);
+lightRouter.put('/:id/dim', changeDim);
+lightRouter.put('/:id/position', changePosition);
+lightRouter.put('/:id/switch', changeSwitch);
+lightRouter.put('/:id/ip', changeIp);
 
-lightRouter.post('/:id/wifi-change', wifiChange);
-lightRouter.post('/:id/wifi-pass-update', wifiPass);
-lightRouter.post('/:id/wifi-toggle-off', wifiToggleOff);
+lightRouter.put('/:id/wifi-change', wifiChange);
+lightRouter.put('/:id/wifi-pass-update', wifiPass);
+lightRouter.put('/:id/wifi-toggle-off', wifiToggleOff);
 
 lightRouter.delete('/:id/*', handleAuth);
 lightRouter.delete('/:id/delete', deleteLight);

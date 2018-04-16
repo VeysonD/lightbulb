@@ -13,7 +13,7 @@ const handleAuth = (req, res, next) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 

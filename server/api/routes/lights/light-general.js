@@ -28,11 +28,11 @@ const newLight = (req, res) => {
     wifi, wifiPass,
   )
     .then((log) => {
-      res.send(log);
+      res.status(201).send(log);
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -43,7 +43,7 @@ const retrieveAll = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -56,7 +56,7 @@ const retrieveLogs = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -69,7 +69,7 @@ const retrieveOne = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 

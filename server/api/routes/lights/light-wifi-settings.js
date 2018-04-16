@@ -15,7 +15,7 @@ const wifiChange = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -29,7 +29,7 @@ const wifiPass = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -41,7 +41,7 @@ const wifiToggleOff = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(`${error.name}: ${error.message}`);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 

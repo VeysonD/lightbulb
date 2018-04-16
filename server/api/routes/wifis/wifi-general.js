@@ -21,11 +21,11 @@ const addWifi = (req, res) => {
     driverVersion, physicalAddress,
   )
     .then((wifi) => {
-      res.send(wifi);
+      res.status(201).send(wifi);
     })
     .catch((error) => {
       console.error(error);
-      res.send(error);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -36,7 +36,7 @@ const retrieveAll = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(error);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 
@@ -49,7 +49,7 @@ const retrieveOne = (req, res) => {
     })
     .catch((error) => {
       console.error(error);
-      res.send(error);
+      res.status(error.code).send(`${error.name}: ${error.message}`);
     });
 };
 

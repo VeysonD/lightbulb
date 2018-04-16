@@ -40,6 +40,7 @@ const addWifiCtrl = (
         resolve(wifi);
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });
@@ -52,6 +53,7 @@ const retrieveAllCtrl = () =>
         resolve(wifis);
       })
       .catch((error) => {
+        error.code = 500;
         reject(error);
       });
   });
@@ -62,12 +64,15 @@ const retrieveOneCtrl = id =>
       .query(`SELECT * FROM wifis WHERE id=${id}`)
       .then((wifi) => {
         if (wifi[0].length === 0) {
-          reject(new Error('That wifi does not exist'));
+          const error = new Error('That wifi does not exist');
+          error.code = 400;
+          reject(error);
         } else {
           resolve(wifi[0]);
         }
       })
       .catch((error) => {
+        error.code = 400;
         reject(error);
       });
   });
