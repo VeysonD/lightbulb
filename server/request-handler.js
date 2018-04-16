@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 
 app.use('/api', router);
 
+// Catch all error handler
 app.use((req, res) => {
   res.status(404).send('Sorry can\'t find that!');
 });
